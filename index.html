@@ -1,0 +1,2436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolão Copa do Mundo 2026</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.2.3/css/flag-icons.min.css">
+<style>
+:root {
+  --navy: #0B2240;
+  --navy-dark: #061530;
+  --navy-light: #1F4E78;
+  --red: #C8102E;
+  --gold: #D4AF37;
+  --gold-light: #F4D77B;
+  --silver: #C0C0C0;
+  --bronze: #CD7F32;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --green: #10b981;
+  --green-light: #d1fae5;
+  --yellow: #fef3c7;
+  --yellow-dark: #f59e0b;
+  --orange-light: #ffe4cc;
+  --red-light: #fee2e2;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+/* Header */
+header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  color: white;
+  padding: 32px 0 24px;
+  border-bottom: 4px solid var(--gold);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+header .subtitle {
+  font-size: 14px;
+  opacity: 0.85;
+  font-weight: 500;
+}
+header .stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+header .stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+header .stat strong { font-size: 18px; font-weight: 800; color: var(--gold-light); }
+
+/* Tab nav */
+nav.tabs {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+nav.tabs .tabs-inner {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+nav.tabs button {
+  background: none;
+  border: none;
+  padding: 16px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+nav.tabs button:hover { color: var(--navy); background: var(--bg); }
+nav.tabs button.active {
+  color: var(--navy);
+  border-bottom-color: var(--red);
+  background: var(--bg);
+}
+nav.tabs button .badge {
+  display: inline-block;
+  background: var(--gold);
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 6px;
+  font-weight: 700;
+}
+
+main { padding: 24px 0 48px; }
+
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.card-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.card-body { padding: 20px; }
+
+/* Ranking */
+.podium {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+  align-items: end;
+}
+.podium-place {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 24px 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-top: 4px solid;
+  position: relative;
+}
+.podium-place.first { border-top-color: var(--gold); padding: 40px 16px; background: linear-gradient(180deg, #fffbeb 0%, white 100%); }
+.podium-place.second { border-top-color: var(--silver); background: linear-gradient(180deg, #f8fafc 0%, white 100%); }
+.podium-place.third { border-top-color: var(--bronze); background: linear-gradient(180deg, #fef3e2 0%, white 100%); }
+.podium-place .medal {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; color: white; font-size: 16px;
+}
+.podium-place.first .medal { background: var(--gold); }
+.podium-place.second .medal { background: var(--silver); color: #444;}
+.podium-place.third .medal { background: var(--bronze); }
+.podium-place .name {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.podium-place .points {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -1px;
+}
+.podium-place .points-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+table.ranking {
+  width: 100%;
+  border-collapse: collapse;
+}
+table.ranking th {
+  background: var(--navy);
+  color: white;
+  padding: 12px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+table.ranking th.num { text-align: center; }
+table.ranking td {
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+table.ranking td.num { text-align: center; font-weight: 700; color: var(--text-muted); width: 40px; }
+table.ranking td.name { font-weight: 700; color: var(--navy); }
+table.ranking td.phase-pts { text-align: center; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+table.ranking td.total {
+  text-align: right;
+  font-weight: 800;
+  color: var(--navy);
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+table.ranking tr:hover { background: var(--bg); }
+table.ranking tr.first { background: linear-gradient(90deg, #fffbeb 0%, transparent 50%); }
+table.ranking tr.first td.num { color: var(--gold); }
+table.ranking tr.second td.num { color: var(--silver); }
+table.ranking tr.third td.num { color: var(--bronze); }
+
+/* Game tables */
+table.games {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+table.games th {
+  background: var(--navy-light);
+  color: white;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+table.games th.center { text-align: center; }
+table.games td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+table.games td.num { text-align: center; color: var(--text-muted); font-weight: 600; width: 40px; }
+table.games td.phase { width: 80px; }
+table.games td.phase .pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.pill.grupos { background: #dbeafe; color: #1e40af; }
+.pill.r32 { background: #fde68a; color: #92400e; }
+.pill.r16 { background: #fdba74; color: #9a3412; }
+.pill.qf { background: #fca5a5; color: #991b1b; }
+.pill.sf { background: #f87171; color: white; }
+.pill.terceiro { background: var(--bronze); color: white; }
+.pill.final { background: var(--gold); color: white; }
+
+table.games td.team-a { text-align: right; font-weight: 600; }
+table.games td.team-b { text-align: left; font-weight: 600; }
+table.games td.score { text-align: center; font-weight: 800; font-size: 16px; color: var(--navy); white-space: nowrap; }
+table.games td.score.empty { color: var(--text-muted); font-weight: 400; font-style: italic; font-size: 13px; }
+table.games td.points { text-align: right; font-weight: 700; width: 60px; font-variant-numeric: tabular-nums; }
+table.games tr:hover { background: var(--bg); }
+
+.points-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.points-badge.zero { background: var(--red-light); color: #991b1b; }
+.points-badge.low { background: var(--yellow); color: #92400e; }
+.points-badge.mid { background: var(--green-light); color: #065f46; }
+.points-badge.high { background: var(--green); color: white; }
+.points-badge.empty { background: var(--bg); color: var(--text-muted); }
+
+.flag-cell { display: inline-flex; align-items: center; gap: 8px; }
+.fi { width: 22px; height: 16px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0,0,0,0.1); flex-shrink: 0; }
+.team-a .flag-cell { flex-direction: row-reverse; }
+
+/* Group separator headers in games table */
+tr.group-header td {
+  background: linear-gradient(90deg, var(--navy-light) 0%, var(--navy-light) 6px, var(--bg) 6px);
+  font-weight: 800;
+  color: var(--navy);
+  padding: 12px 16px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* Participant selector */
+.participant-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.participant-tabs button {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.participant-tabs button:hover { border-color: var(--navy-light); transform: translateY(-1px); }
+.participant-tabs button.active {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+.participant-tabs button .avatar {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+}
+.participant-tabs button.active .avatar { background: var(--gold); }
+
+/* Participant info card */
+.participant-card { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); color: white; }
+.participant-card .card-body { padding: 24px; }
+.participant-card h3 { font-size: 24px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.3px; }
+.participant-card .meta { font-size: 13px; opacity: 0.85; margin-bottom: 16px; }
+.participant-card .summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.participant-card .summary-item {
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 12px;
+  backdrop-filter: blur(10px);
+}
+.participant-card .summary-item .label { font-size: 11px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.participant-card .summary-item .value { font-size: 22px; font-weight: 800; color: var(--gold-light); }
+
+/* Paralelo */
+.paralelo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.paralelo-item {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 14px;
+  border-left: 3px solid var(--green);
+}
+.paralelo-item .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+.paralelo-item .value { font-size: 15px; font-weight: 700; color: var(--navy); margin-top: 4px; display: flex; align-items: center; gap: 8px; }
+.paralelo-item .pts { font-size: 11px; color: var(--green); font-weight: 700; margin-top: 4px; }
+
+/* Rules */
+.rules-section { margin-bottom: 24px; }
+.rules-section h3 { color: var(--navy); font-size: 16px; margin-bottom: 12px; font-weight: 700; }
+.rules-table { width: 100%; border-collapse: collapse; }
+.rules-table th, .rules-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; font-size: 14px; }
+.rules-table th { background: var(--bg); font-weight: 700; color: var(--navy); font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
+.rules-table td.right { text-align: right; font-weight: 700; }
+.rules-table tr.total { background: var(--yellow); font-weight: 800; }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Print button */
+nav.tabs button.print-btn {
+  margin-left: auto;
+  background: var(--gold);
+  color: var(--navy-dark);
+  border-bottom: 3px solid var(--gold);
+  font-weight: 700;
+}
+nav.tabs button.print-btn:hover {
+  background: var(--gold-light);
+  color: var(--navy-dark);
+}
+
+/* Exact-score highlight */
+table.games tr.exact-score {
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.12) 0%, transparent 60%);
+}
+table.games tr.exact-score:hover { background: linear-gradient(90deg, rgba(16, 185, 129, 0.22) 0%, transparent 60%); }
+table.games tr.exact-score td.points { color: var(--green); }
+
+/* Stats charts */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.bar-chart { padding: 8px 0; }
+.bar-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 50px;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.bar-row .bar-label { font-weight: 600; color: var(--navy); }
+.bar-row .bar-track {
+  background: var(--bg);
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.bar-row .bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--navy-light) 0%, var(--navy) 100%);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+.bar-row .bar-fill.gold { background: linear-gradient(90deg, var(--gold) 0%, #b8941f 100%); }
+.bar-row .bar-fill.green { background: linear-gradient(90deg, var(--green) 0%, #047857 100%); }
+.bar-row .bar-fill.red { background: linear-gradient(90deg, var(--red) 0%, #8b0c20 100%); }
+.bar-row .bar-value { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; color: var(--navy); }
+
+.team-tally {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+.team-tally:last-child { border-bottom: none; }
+.team-tally .pick-count {
+  background: var(--navy);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+/* Bracket */
+.bracket-wrap {
+  overflow-x: auto;
+  padding: 16px 0;
+}
+.bracket {
+  display: flex;
+  gap: 24px;
+  min-width: max-content;
+  padding: 8px;
+  align-items: stretch;
+}
+.bracket-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 16px;
+  min-width: 220px;
+}
+.bracket-col.col-r32 .bracket-match { min-height: 60px; }
+.bracket-col.col-r16 { justify-content: space-around; }
+.bracket-col.col-r16 .bracket-match { min-height: 60px; }
+.bracket-col.col-qf .bracket-match { min-height: 60px; }
+.bracket-col.col-sf .bracket-match { min-height: 60px; }
+.bracket-col.col-final .bracket-match { min-height: 80px; }
+.bracket-col-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding: 8px;
+  background: var(--bg);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.bracket-match {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.bracket-match.final {
+  border: 2px solid var(--gold);
+  background: linear-gradient(180deg, #fffbeb 0%, white 100%);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+}
+.bracket-match.third {
+  border: 2px solid var(--bronze);
+  background: linear-gradient(180deg, #fef3e2 0%, white 100%);
+}
+.bracket-team {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+}
+.bracket-team:last-child { border-bottom: none; }
+.bracket-team .team-info { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
+.bracket-team .team-info span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bracket-team .score {
+  font-weight: 800;
+  color: var(--navy);
+  padding: 2px 8px;
+  background: var(--bg);
+  border-radius: 4px;
+  min-width: 24px;
+  text-align: center;
+}
+.bracket-team.winner { background: rgba(16, 185, 129, 0.08); font-weight: 700; }
+.bracket-team.winner .score { background: var(--green); color: white; }
+.bracket-team.empty { color: var(--text-muted); font-style: italic; font-size: 12px; }
+
+@media print {
+  nav.tabs, .filter-bar, .participant-tabs, header .stats { display: none !important; }
+  .tab-content { display: block !important; page-break-after: always; }
+  .tab-content:last-child { page-break-after: auto; }
+  body { background: white; }
+  .card { box-shadow: none; border: 1px solid var(--border); }
+  header { padding: 16px 0; }
+  header h1 { font-size: 22px; }
+  .podium-place { box-shadow: none; }
+}
+
+/* AI Analysis */
+.analise-disclaimer {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-left: 4px solid var(--yellow-dark);
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.analise-disclaimer strong { color: #92400e; }
+
+.suspicion-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  margin-bottom: 12px;
+  border-left: 4px solid var(--green);
+}
+.suspicion-card.medium { border-left-color: var(--yellow-dark); background: linear-gradient(135deg, white 0%, #fffbeb 100%); }
+.suspicion-card.high { border-left-color: var(--red); background: linear-gradient(135deg, white 0%, #fef2f2 100%); }
+
+.suspicion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.suspicion-name { font-size: 20px; font-weight: 800; color: var(--navy); }
+
+.gauge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.gauge-track {
+  width: 180px;
+  height: 12px;
+  background: linear-gradient(90deg, var(--green) 0%, var(--green) 35%, var(--yellow-dark) 35%, var(--yellow-dark) 65%, var(--red) 65%, var(--red) 100%);
+  border-radius: 6px;
+  position: relative;
+  overflow: visible;
+}
+.gauge-marker {
+  position: absolute;
+  top: -4px;
+  width: 4px;
+  height: 20px;
+  background: var(--navy);
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px white, 0 1px 4px rgba(0,0,0,0.3);
+  transition: left 0.6s ease;
+}
+.gauge-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+  min-width: 60px;
+}
+.gauge-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+.gauge-label.low { background: var(--green-light); color: #065f46; }
+.gauge-label.medium { background: var(--yellow); color: #92400e; }
+.gauge-label.high { background: var(--red-light); color: #991b1b; }
+
+.flags-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+.flag-item {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+.flag-item .flag-title {
+  font-weight: 700;
+  color: var(--navy);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.flag-item .flag-title .score-mini {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+.flag-item .flag-title .score-mini.ok { background: var(--green-light); color: #065f46; }
+.flag-item .flag-title .score-mini.warn { background: var(--yellow); color: #92400e; }
+.flag-item .flag-title .score-mini.bad { background: var(--red-light); color: #991b1b; }
+.flag-item .flag-detail { color: var(--text-muted); font-size: 12px; }
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-bar label { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-right: 4px; }
+.filter-bar button {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--text);
+}
+.filter-bar button.active {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+
+/* Score inputs (editable results) */
+.score-input {
+  width: 44px;
+  padding: 7px 4px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--navy);
+  font-family: inherit;
+  -moz-appearance: textfield;
+  background: white;
+}
+.score-input:focus {
+  outline: none;
+  border-color: var(--navy-light);
+  box-shadow: 0 0 0 3px rgba(31,78,120,0.15);
+}
+.score-input.filled { border-color: var(--green); background: var(--green-light); }
+.score-input::-webkit-outer-spin-button,
+.score-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.score-input-x { color: var(--text-muted); font-weight: 700; margin: 0 4px; }
+
+/* Action bar buttons */
+.action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+.action-bar .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.io-btn {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--navy);
+  transition: all 0.15s;
+}
+.io-btn:hover { border-color: var(--navy-light); transform: translateY(-1px); }
+.io-btn.primary { background: var(--navy); color: white; border-color: var(--navy); }
+.io-btn.primary:hover { background: var(--navy-light); }
+.io-btn.danger { color: var(--red); border-color: #f5c6cb; }
+.io-btn.danger:hover { background: var(--red-light); }
+.results-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--bg);
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border-left: 3px solid var(--navy-light);
+}
+
+@media (max-width: 700px) {
+  header h1 { font-size: 24px; }
+  .podium { grid-template-columns: 1fr; }
+  .podium-place.first { padding: 24px 16px; }
+  .participant-card h3 { font-size: 20px; }
+  table.games td.phase { display: none; }
+  table.games th.phase { display: none; }
+  table.games .flag-cell .name-text { max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>Bolão Copa do Mundo 2026</h1>
+    <div class="subtitle">Estados Unidos · México · Canadá · 11/06 a 19/07</div>
+    <div class="stats">
+      <div class="stat"><strong>3</strong> AIs competindo</div>
+      <div class="stat"><strong>104</strong> jogos</div>
+      <div class="stat"><strong>12</strong> grupos</div>
+      <div class="stat"><strong>1.530</strong> pontos máx</div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="container">
+    <div class="tabs-inner">
+      <button class="tab-btn active" data-tab="ranking">Ranking</button>
+      <button class="tab-btn" data-tab="placares">Placares Oficiais</button>
+      <button class="tab-btn" data-tab="bracket">Chaveamento</button>
+      <button class="tab-btn" data-tab="participantes">Participantes</button>
+      <button class="tab-btn" data-tab="stats">Estatísticas</button>
+      <button class="tab-btn" data-tab="analise">🔍 Análise AI</button>
+      <button class="tab-btn" data-tab="regras">Regras</button>
+      <button class="tab-btn print-btn" onclick="window.print(); return false;">🖨️ Imprimir / PDF</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+    <div id="ranking" class="tab-content active"></div>
+    <div id="placares" class="tab-content"></div>
+    <div id="bracket" class="tab-content"></div>
+    <div id="participantes" class="tab-content"></div>
+    <div id="stats" class="tab-content"></div>
+    <div id="analise" class="tab-content"></div>
+    <div id="regras" class="tab-content"></div>
+  </div>
+</main>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const GROUPS = {
+  'A': [['México','mx'],['África do Sul','za'],['Coreia do Sul','kr'],['Rep. Tcheca','cz']],
+  'B': [['Canadá','ca'],['Bósnia','ba'],['Catar','qa'],['Suíça','ch']],
+  'C': [['Brasil','br'],['Marrocos','ma'],['Escócia','gb-sct'],['Haiti','ht']],
+  'D': [['Estados Unidos','us'],['Turquia','tr'],['Paraguai','py'],['Austrália','au']],
+  'E': [['Alemanha','de'],['Curaçao','cw'],['Costa do Marfim','ci'],['Equador','ec']],
+  'F': [['Holanda','nl'],['Japão','jp'],['Suécia','se'],['Tunísia','tn']],
+  'G': [['Bélgica','be'],['Egito','eg'],['Irã','ir'],['Nova Zelândia','nz']],
+  'H': [['Espanha','es'],['Cabo Verde','cv'],['Uruguai','uy'],['Arábia Saudita','sa']],
+  'I': [['França','fr'],['Iraque','iq'],['Noruega','no'],['Senegal','sn']],
+  'J': [['Argentina','ar'],['Áustria','at'],['Argélia','dz'],['Jordânia','jo']],
+  'K': [['Portugal','pt'],['Uzbequistão','uz'],['Colômbia','co'],['RD Congo','cd']],
+  'L': [['Inglaterra','gb-eng'],['Croácia','hr'],['Gana','gh'],['Panamá','pa']],
+};
+
+const PARTICIPANTS = ['Claude', 'ChatGPT', 'Grok', 'Martin M.', 'Tito M', 'nilton', 'Iara e Violeta', 'Eidão', 'Zerba', 'Guto', 'Quim', 'Cisco', 'pablo', 'wisnikão do grau', 'Felipão', 'Renata Megale', 'Arthur', 'JTC', 'Pati C.', 'Danilo Zica', 'Pedro T', 'Nati', 'Ali', 'Jojota', 'Samuca', 'Gabi Curintia'];
+
+const MULT = {'Grupos': 1, 'R32': 2, 'R16': 2, 'Quartas': 3, 'Semis': 4, '3º Lugar': 3, 'Final': 5};
+
+const PARALELO = {
+  'Claude': {champion:['Espanha','es'], vice:['Argentina','ar'], third:['Portugal','pt'], fourth:['Marrocos','ma'], topScorer:'Lautaro Martínez (Argentina)'},
+  'ChatGPT': {champion:['Brasil','br'], vice:['França','fr'], third:['Espanha','es'], fourth:['Argentina','ar'], topScorer:'Mbappé (França)'},
+  'Grok': {champion:['Inglaterra','gb-eng'], vice:['Espanha','es'], third:['França','fr'], fourth:['Brasil','br'], topScorer:'Haaland (Noruega)'},
+  'Martin M.': {champion:['Espanha','es'], vice:['Portugal','pt'], third:['Argentina','ar'], fourth:['França','fr'], topScorer:'Cristiano Ronaldo (Portugal)'},
+  'Tito M': {champion:['Portugal','pt'], vice:['Argentina','ar'], third:['França','fr'], fourth:['México','mx'], topScorer:'Messi (Argentina)'},
+  'nilton': {champion:['França','fr'], vice:['Argentina','ar'], third:['Espanha','es'], fourth:['Inglaterra','gb-eng'], topScorer:'Mbappé (França)'},
+  'Iara e Violeta': {champion:['França','fr'], vice:['Espanha','es'], third:['Brasil','br'], fourth:['Argentina','ar'], topScorer:'Mbappé (França)'},
+  "Eidão": {champion:['França','fr'], vice:['Portugal','pt'], third:['Argentina','ar'], fourth:['Brasil','br'], topScorer:'Vini Jr (Brasil)'},
+  "Zerba": {champion:['Brasil','br'], vice:['Bélgica','be'], third:['Alemanha','de'], fourth:['Portugal','pt'], topScorer:"Igor Thiago (Brasil)"},
+  "Guto": {champion:['Holanda','nl'], vice:['Espanha','es'], third:['França','fr'], fourth:['Marrocos','ma'], topScorer:"Mbappé (França)"},
+  "Quim": {champion:['França','fr'], vice:['Espanha','es'], third:['Brasil','br'], fourth:['Inglaterra','gb-eng'], topScorer:"Harry Kane (Inglaterra)"},
+  "Cisco": {champion:['Alemanha','de'], vice:['França','fr'], third:['Inglaterra','gb-eng'], fourth:['Holanda','nl'], topScorer:"Kai Havertz (Alemanha)"},
+  "pablo": {champion:['Inglaterra','gb-eng'], vice:['Espanha','es'], third:['França','fr'], fourth:['Argentina','ar'], topScorer:"Harry Kane (Inglaterra)"},
+  "wisnikão do grau": {champion:['Brasil','br'], vice:['França','fr'], third:['Espanha','es'], fourth:['Portugal','pt'], topScorer:"Mbappé (França)"},
+  "Felipão": {champion:['Espanha','es'], vice:['Portugal','pt'], third:['Alemanha','de'], fourth:['Marrocos','ma'], topScorer:"Mbappé (França)"},
+  "Renata Megale": {champion:['Alemanha','de'], vice:['Portugal','pt'], third:['Brasil','br'], fourth:['Argentina','ar'], topScorer:"Messi (Argentina)"},
+  "Arthur": {champion:['Brasil','br'], vice:['Portugal','pt'], third:['França','fr'], fourth:['Holanda','nl'], topScorer:'Mbappé (França)'},
+  "JTC": {champion:['Brasil','br'], vice:['França','fr'], third:['Portugal','pt'], fourth:['Espanha','es'], topScorer:'Mbappé (França)'},
+  "Pati C.": {champion:['França','fr'], vice:['Argentina','ar'], third:['Portugal','pt'], fourth:['Brasil','br'], topScorer:'Olise (França)'},
+  "Danilo Zica": {champion:['Brasil','br'], vice:['França','fr'], third:['Argentina','ar'], fourth:['Espanha','es'], topScorer:'Kylian Mbappé (França)'},
+  "Pedro T": {champion:['França','fr'], vice:['Portugal','pt'], third:['Espanha','es'], fourth:['Argentina','ar'], topScorer:'Kylian Mbappé (França)'},
+  "Nati": {champion:['Brasil','br'], vice:['França','fr'], third:['Argentina','ar'], fourth:['Costa do Marfim','ci'], topScorer:'Endrick (Brasil)'},
+  "Ali": {champion:['Espanha','es'], vice:['França','fr'], third:['Argentina','ar'], fourth:['Inglaterra','gb-eng'], topScorer:'Mbappé (França)'},
+  "Jojota": {champion:['Brasil','br'], vice:['Inglaterra','gb-eng'], third:['França','fr'], fourth:['Espanha','es'], topScorer:'Harry Kane (Inglaterra)'},
+  "Samuca": {champion:['Brasil','br'], vice:['França','fr'], third:['Portugal','pt'], fourth:['Espanha','es'], topScorer:'Mbappé (França)'},
+  "Gabi Curintia": {champion:['França','fr'], vice:['Argentina','ar'], third:['Croácia','hr'], fourth:['México','mx'], topScorer:'Santiago Giménez (México)'},
+};
+
+// Generate all matches
+function generateMatches() {
+  const matches = [];
+  const pairs = [[0,1,1],[2,3,1],[0,2,2],[3,1,2],[3,0,3],[1,2,3]];
+  let n = 1;
+  for (const [letter, teams] of Object.entries(GROUPS)) {
+    for (const [a, b, rodada] of pairs) {
+      matches.push({
+        num: n,
+        phase: 'Grupos',
+        mult: 1,
+        subphase: `Grupo ${letter}`,
+        rodada,
+        teamA: teams[a],
+        teamB: teams[b],
+      });
+      n++;
+    }
+  }
+  const koStructure = [['R32',16],['R16',8],['Quartas',4],['Semis',2],['3º Lugar',1],['Final',1]];
+  for (const [phase, count] of koStructure) {
+    for (let i = 1; i <= count; i++) {
+      matches.push({
+        num: n,
+        phase,
+        mult: MULT[phase],
+        subphase: phase,
+        rodada: i,
+        teamA: null,
+        teamB: null,
+      });
+      n++;
+    }
+  }
+  return matches;
+}
+
+const MATCHES = generateMatches();
+
+// Seeded random (LCG) so predictions are reproducible per participant
+function seededRandom(seed) {
+  let state = seed;
+  return function() {
+    state = (state * 1664525 + 1013904223) % 4294967296;
+    return state / 4294967296;
+  };
+}
+function strHash(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h) + s.charCodeAt(i), h |= 0;
+  return Math.abs(h);
+}
+function weightedPick(rng, options, weights) {
+  const total = weights.reduce((a,b)=>a+b, 0);
+  let r = rng() * total;
+  for (let i = 0; i < options.length; i++) {
+    r -= weights[i];
+    if (r <= 0) return options[i];
+  }
+  return options[options.length-1];
+}
+
+// Manual predictions for AI competitors — keyed by match number (1-72 for group stage)
+const MANUAL_PREDICTIONS = {
+  // CLAUDE — palpites analíticos, por força relativa das seleções.
+  // Sem inserir empates/zebras artificiais pra disfarçar: é a estimativa direta de cada jogo.
+  'Claude': {
+    // Grupo A
+    1: [2,0],  // México x África do Sul
+    2: [2,1],  // Coreia do Sul x Rep. Tcheca
+    3: [1,1],  // México x Coreia do Sul — parelho
+    4: [2,0],  // Rep. Tcheca x África do Sul
+    5: [1,2],  // Rep. Tcheca x México
+    6: [0,2],  // África do Sul x Coreia do Sul
+    // Grupo B
+    7: [2,1],  // Canadá x Bósnia
+    8: [0,2],  // Catar x Suíça
+    9: [2,0],  // Canadá x Catar
+    10: [2,0], // Suíça x Bósnia
+    11: [1,1], // Suíça x Canadá — parelho
+    12: [2,1], // Bósnia x Catar
+    // Grupo C
+    13: [2,1], // Brasil x Marrocos
+    14: [2,0], // Escócia x Haiti
+    15: [3,0], // Brasil x Escócia
+    16: [0,3], // Haiti x Marrocos
+    17: [0,4], // Haiti x Brasil
+    18: [2,0], // Marrocos x Escócia
+    // Grupo D
+    19: [2,1], // EUA x Turquia
+    20: [1,1], // Paraguai x Austrália — parelho
+    21: [2,0], // EUA x Paraguai
+    22: [1,2], // Austrália x Turquia
+    23: [1,2], // Austrália x EUA
+    24: [2,1], // Turquia x Paraguai
+    // Grupo E
+    25: [3,0], // Alemanha x Curaçao
+    26: [1,1], // Costa do Marfim x Equador — parelho
+    27: [2,1], // Alemanha x Costa do Marfim
+    28: [2,0], // Equador x Curaçao
+    29: [1,2], // Equador x Alemanha
+    30: [0,2], // Curaçao x Costa do Marfim
+    // Grupo F
+    31: [2,1], // Holanda x Japão
+    32: [2,0], // Suécia x Tunísia
+    33: [2,0], // Holanda x Suécia
+    34: [0,2], // Tunísia x Japão
+    35: [0,2], // Tunísia x Holanda
+    36: [2,1], // Japão x Suécia
+    // Grupo G
+    37: [2,1], // Bélgica x Egito
+    38: [2,0], // Irã x Nova Zelândia
+    39: [1,1], // Bélgica x Irã — Irã fecha bem
+    40: [0,2], // Nova Zelândia x Egito
+    41: [0,2], // Nova Zelândia x Bélgica
+    42: [1,1], // Egito x Irã — parelho
+    // Grupo H
+    43: [3,0], // Espanha x Cabo Verde
+    44: [2,0], // Uruguai x Arábia Saudita
+    45: [2,1], // Espanha x Uruguai
+    46: [1,0], // Arábia Saudita x Cabo Verde
+    47: [0,3], // Arábia Saudita x Espanha
+    48: [0,2], // Cabo Verde x Uruguai
+    // Grupo I
+    49: [3,0], // França x Iraque
+    50: [2,1], // Noruega x Senegal
+    51: [2,1], // França x Noruega
+    52: [2,0], // Senegal x Iraque
+    53: [1,2], // Senegal x França
+    54: [0,3], // Iraque x Noruega
+    // Grupo J
+    55: [2,0], // Argentina x Áustria
+    56: [2,0], // Argélia x Jordânia
+    57: [2,0], // Argentina x Argélia
+    58: [0,2], // Jordânia x Áustria
+    59: [0,3], // Jordânia x Argentina
+    60: [1,1], // Áustria x Argélia — parelho
+    // Grupo K
+    61: [3,0], // Portugal x Uzbequistão
+    62: [2,0], // Colômbia x RD Congo
+    63: [1,1], // Portugal x Colômbia — jogo grande, parelho
+    64: [1,1], // RD Congo x Uzbequistão — parelho
+    65: [0,2], // RD Congo x Portugal
+    66: [0,2], // Uzbequistão x Colômbia
+    // Grupo L
+    67: [2,1], // Inglaterra x Croácia
+    68: [1,0], // Gana x Panamá
+    69: [2,0], // Inglaterra x Gana
+    70: [0,2], // Panamá x Croácia
+    71: [0,3], // Panamá x Inglaterra
+    72: [2,1], // Croácia x Gana
+  },
+  // CHATGPT — Classic LLM pattern: heavily favors ranked teams, few draws, no upsets
+  // Will trigger detection: low draws %, conservative with favorites, repeated 2x0
+  'ChatGPT': {
+    1: [3,0], 2: [2,1], 3: [2,1], 4: [1,2], 5: [0,2], 6: [2,1],
+    7: [2,0], 8: [0,3], 9: [4,0], 10: [3,0], 11: [1,2], 12: [1,1],
+    13: [2,0], 14: [2,0], 15: [3,0], 16: [0,2], 17: [0,4], 18: [2,1],
+    19: [2,1], 20: [1,0], 21: [2,0], 22: [0,2], 23: [0,3], 24: [3,0],
+    25: [4,0], 26: [2,1], 27: [3,1], 28: [3,0], 29: [0,2], 30: [0,3],
+    31: [3,1], 32: [2,0], 33: [2,1], 34: [0,2], 35: [0,3], 36: [1,2],
+    37: [2,1], 38: [3,0], 39: [3,1], 40: [0,2], 41: [0,4], 42: [1,2],
+    43: [4,0], 44: [2,0], 45: [3,1], 46: [0,1], 47: [0,3], 48: [0,2],
+    49: [4,0], 50: [3,1], 51: [3,1], 52: [2,0], 53: [0,3], 54: [0,4],
+    55: [3,0], 56: [3,0], 57: [3,0], 58: [0,2], 59: [0,4], 60: [2,1],
+    61: [3,0], 62: [3,0], 63: [2,1], 64: [3,1], 65: [0,3], 66: [0,3],
+    67: [3,1], 68: [2,1], 69: [3,0], 70: [0,3], 71: [0,4], 72: [2,0],
+  },
+  // GROK — Edgy LLM: more upsets, but still LLM patterns (uniform distribution, weird scores)
+  'Grok': {
+    1: [1,2], 2: [3,2], 3: [0,1], 4: [2,1], 5: [2,3], 6: [2,2],
+    7: [3,2], 8: [1,1], 9: [4,1], 10: [2,3], 11: [2,1], 12: [3,2],
+    13: [2,3], 14: [1,2], 15: [4,1], 16: [1,3], 17: [2,1], 18: [3,2],
+    19: [3,2], 20: [2,2], 21: [4,2], 22: [2,3], 23: [1,2], 24: [1,1],
+    25: [5,1], 26: [3,2], 27: [4,3], 28: [4,1], 29: [2,2], 30: [1,4],
+    31: [4,2], 32: [3,3], 33: [3,3], 34: [1,3], 35: [2,4], 36: [3,2],
+    37: [3,3], 38: [4,1], 39: [4,2], 40: [1,3], 41: [0,5], 42: [2,2],
+    43: [5,0], 44: [4,0], 45: [3,3], 46: [1,2], 47: [2,4], 48: [1,3],
+    49: [4,1], 50: [3,3], 51: [2,3], 52: [3,2], 53: [2,3], 54: [1,4],
+    55: [3,2], 56: [3,1], 57: [4,2], 58: [1,3], 59: [1,4], 60: [3,3],
+    61: [4,0], 62: [4,2], 63: [2,2], 64: [3,2], 65: [1,3], 66: [2,4],
+    67: [2,3], 68: [3,2], 69: [4,1], 70: [1,3], 71: [1,5], 72: [3,2],
+  },
+  // MARTIN MAIA MELLO — palpites enviados em 05/06/2026
+  'Martin M.': {
+    1:[2,1], 2:[3,0], 3:[1,2], 4:[1,1], 5:[0,2], 6:[0,2],
+    7:[1,0], 8:[0,1], 9:[1,0], 10:[2,0], 11:[0,1], 12:[0,0],
+    13:[2,0], 14:[1,0], 15:[1,0], 16:[0,3], 17:[1,4], 18:[2,1],
+    19:[2,1], 20:[0,1], 21:[1,0], 22:[1,1], 23:[1,2], 24:[1,1],
+    25:[3,0], 26:[0,1], 27:[3,1], 28:[1,0], 29:[1,2], 30:[0,0],
+    31:[1,2], 32:[2,0], 33:[1,0], 34:[0,2], 35:[0,1], 36:[2,1],
+    37:[3,1], 38:[1,1], 39:[2,1], 40:[0,1], 41:[0,2], 42:[1,0],
+    43:[4,0], 44:[3,0], 45:[2,2], 46:[1,0], 47:[0,2], 48:[1,3],
+    49:[3,0], 50:[2,3], 51:[3,2], 52:[2,0], 53:[1,1], 54:[1,2],
+    55:[4,1], 56:[2,1], 57:[3,0], 58:[1,1], 59:[0,3], 60:[1,1],
+    61:[5,1], 62:[3,0], 63:[3,1], 64:[1,1], 65:[0,2], 66:[2,1],
+    67:[2,2], 68:[0,0], 69:[2,0], 70:[1,2], 71:[0,2], 72:[1,0],
+  },
+  // TITO MAIA — palpites enviados em planilha
+  'Tito M': {
+    1:[1,1], 2:[0,2], 3:[3,0], 4:[1,1], 5:[1,2], 6:[1,1],
+    7:[2,0], 8:[1,0], 9:[0,1], 10:[2,1], 11:[2,1], 12:[0,3],
+    13:[1,1], 14:[3,2], 15:[2,1], 16:[0,2], 17:[0,3], 18:[2,1],
+    19:[1,0], 20:[1,2], 21:[1,1], 22:[3,1], 23:[1,2], 24:[2,1],
+    25:[1,2], 26:[0,1], 27:[1,0], 28:[2,0], 29:[1,1], 30:[0,0],
+    31:[2,0], 32:[1,2], 33:[2,1], 34:[1,2], 35:[2,1], 36:[0,2],
+    37:[3,2], 38:[2,1], 39:[3,2], 40:[1,0], 41:[3,2], 42:[2,1],
+    43:[2,0], 44:[1,1], 45:[2,0], 46:[0,1], 47:[1,0], 48:[2,3],
+    49:[2,0], 50:[3,2], 51:[2,2], 52:[2,1], 53:[1,3], 54:[1,2],
+    55:[2,1], 56:[3,2], 57:[3,1], 58:[1,1], 59:[2,3], 60:[1,1],
+    61:[2,0], 62:[2,1], 63:[3,1], 64:[2,1], 65:[1,2], 66:[1,2],
+    67:[2,1], 68:[2,2], 69:[3,2], 70:[1,2], 71:[3,2], 72:[2,1],
+  },
+  // NILTON ROSSI — palpites enviados em planilha
+  'nilton': {
+    1:[2,0], 2:[2,1], 3:[1,1], 4:[3,1], 5:[0,1], 6:[0,2],
+    7:[2,1], 8:[0,2], 9:[4,0], 10:[3,0], 11:[1,1], 12:[1,0],
+    13:[1,1], 14:[3,0], 15:[2,1], 16:[0,3], 17:[0,3], 18:[1,0],
+    19:[2,0], 20:[1,0], 21:[2,0], 22:[0,2], 23:[0,2], 24:[1,1],
+    25:[3,0], 26:[0,2], 27:[1,0], 28:[2,0], 29:[1,2], 30:[0,5],
+    31:[2,1], 32:[1,0], 33:[2,0], 34:[0,2], 35:[1,3], 36:[2,0],
+    37:[2,1], 38:[1,0], 39:[2,0], 40:[0,2], 41:[0,3], 42:[3,0],
+    43:[5,0], 44:[2,0], 45:[2,0], 46:[3,1], 47:[0,3], 48:[0,2],
+    49:[3,0], 50:[2,0], 51:[2,1], 52:[2,0], 53:[0,2], 54:[1,2],
+    55:[2,0], 56:[1,0], 57:[1,1], 58:[0,1], 59:[0,3], 60:[1,1],
+    61:[3,0], 62:[3,0], 63:[2,1], 64:[0,1], 65:[0,3], 66:[0,1],
+    67:[2,1], 68:[1,0], 69:[2,0], 70:[0,2], 71:[0,4], 72:[2,1],
+  },
+  // IARA TEIXEIRA WISNIK — palpites enviados em planilha
+  'Iara e Violeta': {
+    1:[2,1], 2:[1,3], 3:[2,2], 4:[1,2], 5:[1,1], 6:[3,1],
+    7:[3,1], 8:[0,2], 9:[1,0], 10:[3,0], 11:[1,1], 12:[0,0],
+    13:[2,0], 14:[1,0], 15:[2,1], 16:[1,2], 17:[0,3], 18:[1,1],
+    19:[1,1], 20:[2,1], 21:[2,2], 22:[3,2], 23:[3,3], 24:[2,3],
+    25:[2,0], 26:[2,1], 27:[3,3], 28:[2,0], 29:[2,2], 30:[1,2],
+    31:[3,1], 32:[1,0], 33:[2,1], 34:[0,0], 35:[0,2], 36:[1,0],
+    37:[1,0], 38:[0,1], 39:[2,1], 40:[2,2], 41:[0,1], 42:[0,0],
+    43:[3,0], 44:[2,0], 45:[3,1], 46:[2,2], 47:[0,2], 48:[1,1],
+    49:[3,0], 50:[2,0], 51:[3,1], 52:[2,1], 53:[0,2], 54:[0,1],
+    55:[3,0], 56:[2,2], 57:[2,0], 58:[0,1], 59:[0,2], 60:[2,2],
+    61:[2,1], 62:[2,0], 63:[3,2], 64:[1,0], 65:[0,2], 66:[0,2],
+    67:[2,0], 68:[2,2], 69:[2,1], 70:[0,1], 71:[1,3], 72:[1,0],
+  },
+  // Eidão — palpites enviados
+  "Eidão": {
+    1:[3,1], 2:[2,4], 3:[2,2], 4:[0,0], 5:[3,4], 6:[1,2], 7:[1,1], 8:[0,3], 9:[1,0], 10:[3,1], 11:[1,0], 12:[1,1],
+    13:[2,0], 14:[3,1], 15:[1,0], 16:[0,2], 17:[2,4], 18:[0,0], 19:[1,3], 20:[2,2], 21:[3,2], 22:[1,4], 23:[0,1], 24:[3,2],
+    25:[6,0], 26:[3,3], 27:[3,1], 28:[2,1], 29:[1,4], 30:[1,4], 31:[1,2], 32:[3,2], 33:[1,0], 34:[3,1], 35:[1,1], 36:[2,0],
+    37:[3,1], 38:[2,1], 39:[2,0], 40:[0,0], 41:[1,3], 42:[1,1], 43:[4,0], 44:[2,3], 45:[1,2], 46:[2,0], 47:[1,2], 48:[1,1],
+    49:[4,0], 50:[2,2], 51:[2,1], 52:[2,0], 53:[1,3], 54:[2,3], 55:[4,0], 56:[3,2], 57:[2,1], 58:[1,1], 59:[1,2], 60:[0,0],
+    61:[3,0], 62:[2,2], 63:[3,2], 64:[1,0], 65:[2,4], 66:[1,2], 67:[1,1], 68:[3,2], 69:[2,3], 70:[0,2], 71:[0,2], 72:[2,3],
+  },
+  // Zerba — palpites enviados
+  "Zerba": {
+    1:[2,0], 2:[1,1], 3:[3,0], 4:[1,0], 5:[1,1], 6:[2,2], 7:[1,0], 8:[0,2], 9:[1,0], 10:[1,2], 11:[0,0], 12:[1,0],
+    13:[2,0], 14:[4,1], 15:[1,0], 16:[1,2], 17:[0,4], 18:[1,2], 19:[2,1], 20:[1,0], 21:[2,2], 22:[1,1], 23:[1,2], 24:[1,1],
+    25:[5,0], 26:[1,1], 27:[2,2], 28:[2,1], 29:[2,1], 30:[1,2], 31:[1,2], 32:[1,1], 33:[1,1], 34:[1,1], 35:[1,3], 36:[2,2],
+    37:[2,1], 38:[2,0], 39:[2,0], 40:[0,2], 41:[0,3], 42:[1,2], 43:[6,0], 44:[1,1], 45:[3,1], 46:[1,1], 47:[0,2], 48:[0,2],
+    49:[3,0], 50:[2,2], 51:[1,2], 52:[0,1], 53:[1,1], 54:[0,1], 55:[1,0], 56:[2,0], 57:[1,1], 58:[0,2], 59:[0,2], 60:[2,1],
+    61:[2,0], 62:[1,1], 63:[2,2], 64:[1,0], 65:[0,2], 66:[0,0], 67:[2,1], 68:[1,1], 69:[2,1], 70:[0,1], 71:[0,3], 72:[1,1],
+  },
+  // Guto — palpites enviados
+  "Guto": {
+    1:[2,0], 2:[1,2], 3:[3,2], 4:[4,1], 5:[1,1], 6:[1,3], 7:[0,2], 8:[0,4], 9:[1,1], 10:[2,1], 11:[3,1], 12:[4,0],
+    13:[0,2], 14:[3,1], 15:[1,1], 16:[0,4], 17:[0,4], 18:[2,1], 19:[2,2], 20:[2,1], 21:[2,1], 22:[0,3], 23:[1,2], 24:[2,2],
+    25:[5,0], 26:[2,0], 27:[1,2], 28:[2,0], 29:[1,3], 30:[0,3], 31:[3,2], 32:[1,2], 33:[2,0], 34:[1,2], 35:[0,3], 36:[2,1],
+    37:[2,1], 38:[2,1], 39:[1,1], 40:[1,2], 41:[0,4], 42:[2,1], 43:[3,1], 44:[2,0], 45:[2,2], 46:[2,1], 47:[1,4], 48:[2,3],
+    49:[5,0], 50:[2,3], 51:[3,1], 52:[4,1], 53:[1,3], 54:[0,2], 55:[2,0], 56:[2,0], 57:[2,0], 58:[0,3], 59:[0,4], 60:[1,2],
+    61:[3,0], 62:[2,1], 63:[2,1], 64:[2,0], 65:[0,2], 66:[0,3], 67:[1,1], 68:[2,0], 69:[2,1], 70:[0,3], 71:[1,3], 72:[2,1],
+  },
+  // Quim — palpites enviados
+  "Quim": {
+    1:[2,0], 2:[2,1], 3:[1,1], 4:[1,0], 5:[2,2], 6:[0,3], 7:[2,1], 8:[0,3], 9:[2,0], 10:[2,1], 11:[0,0], 12:[1,0],
+    13:[3,2], 14:[3,0], 15:[2,2], 16:[1,2], 17:[1,2], 18:[0,1], 19:[0,0], 20:[1,0], 21:[0,1], 22:[1,2], 23:[1,1], 24:[3,1],
+    25:[4,1], 26:[3,2], 27:[1,1], 28:[2,0], 29:[1,1], 30:[0,1], 31:[2,2], 32:[1,1], 33:[3,2], 34:[0,1], 35:[0,3], 36:[1,2],
+    37:[2,0], 38:[2,1], 39:[4,0], 40:[0,1], 41:[0,3], 42:[1,1], 43:[6,0], 44:[2,1], 45:[1,1], 46:[0,1], 47:[0,4], 48:[0,2],
+    49:[4,1], 50:[2,2], 51:[2,1], 52:[3,1], 53:[1,1], 54:[0,3], 55:[4,2], 56:[0,1], 57:[2,1], 58:[0,0], 59:[1,2], 60:[1,1],
+    61:[3,0], 62:[2,1], 63:[0,2], 64:[2,0], 65:[1,1], 66:[0,3], 67:[2,1], 68:[1,1], 69:[4,1], 70:[0,1], 71:[0,2], 72:[2,1],
+  },
+  // Cisco — palpites enviados
+  "Cisco": {
+    1:[1,1], 2:[1,0], 3:[2,0], 4:[0,1], 5:[1,2], 6:[0,0], 7:[2,0], 8:[0,1], 9:[3,1], 10:[1,1], 11:[1,0], 12:[1,0],
+    13:[1,0], 14:[1,0], 15:[0,0], 16:[1,2], 17:[0,2], 18:[3,1], 19:[1,2], 20:[1,1], 21:[0,1], 22:[1,0], 23:[0,1], 24:[1,0],
+    25:[4,1], 26:[2,1], 27:[3,1], 28:[0,1], 29:[1,1], 30:[0,1], 31:[2,2], 32:[2,0], 33:[3,1], 34:[1,2], 35:[2,4], 36:[1,1],
+    37:[2,1], 38:[1,0], 39:[2,0], 40:[0,2], 41:[1,1], 42:[2,1], 43:[3,1], 44:[0,0], 45:[3,2], 46:[1,2], 47:[0,2], 48:[0,2],
+    49:[7,2], 50:[2,2], 51:[0,2], 52:[1,0], 53:[0,2], 54:[0,2], 55:[1,1], 56:[1,2], 57:[1,1], 58:[2,1], 59:[0,2], 60:[0,0],
+    61:[5,1], 62:[1,3], 63:[2,1], 64:[1,0], 65:[1,2], 66:[0,3], 67:[3,1], 68:[1,0], 69:[1,2], 70:[1,1], 71:[1,2], 72:[3,2],
+  },
+  // pablo — palpites enviados
+  "pablo": {
+    1:[2,0], 2:[2,1], 3:[3,3], 4:[0,0], 5:[1,2], 6:[1,3], 7:[1,1], 8:[0,1], 9:[2,2], 10:[2,0], 11:[0,0], 12:[2,2],
+    13:[1,2], 14:[2,0], 15:[1,1], 16:[0,3], 17:[0,5], 18:[0,0], 19:[2,2], 20:[2,1], 21:[1,1], 22:[0,2], 23:[1,2], 24:[1,1],
+    25:[6,0], 26:[2,2], 27:[2,1], 28:[2,0], 29:[0,2], 30:[0,4], 31:[1,1], 32:[2,1], 33:[3,2], 34:[0,3], 35:[0,3], 36:[2,2],
+    37:[1,1], 38:[2,0], 39:[2,0], 40:[0,1], 41:[0,3], 42:[1,1], 43:[4,0], 44:[2,0], 45:[2,1], 46:[2,0], 47:[0,4], 48:[0,3],
+    49:[3,0], 50:[2,2], 51:[1,1], 52:[4,0], 53:[1,3], 54:[0,2], 55:[3,0], 56:[1,2], 57:[1,1], 58:[2,2], 59:[0,2], 60:[0,1],
+    61:[3,0], 62:[2,2], 63:[2,1], 64:[2,2], 65:[0,3], 66:[0,2], 67:[0,0], 68:[2,0], 69:[2,1], 70:[0,3], 71:[0,2], 72:[1,1],
+  },
+  // wisnikão do grau — palpites enviados
+  "wisnikão do grau": {
+    1:[1,1], 2:[1,0], 3:[2,1], 4:[2,2], 5:[0,2], 6:[0,2], 7:[1,1], 8:[1,2], 9:[0,0], 10:[2,0], 11:[1,0], 12:[2,1],
+    13:[2,1], 14:[1,0], 15:[3,1], 16:[1,3], 17:[1,4], 18:[2,1], 19:[1,1], 20:[1,0], 21:[2,1], 22:[0,0], 23:[1,1], 24:[0,1],
+    25:[3,1], 26:[1,1], 27:[1,1], 28:[2,0], 29:[1,2], 30:[1,1], 31:[2,2], 32:[0,0], 33:[2,1], 34:[1,3], 35:[0,1], 36:[3,0],
+    37:[2,2], 38:[0,0], 39:[2,1], 40:[1,3], 41:[0,2], 42:[0,0], 43:[2,0], 44:[1,0], 45:[3,2], 46:[1,0], 47:[1,3], 48:[1,3],
+    49:[3,1], 50:[1,0], 51:[3,0], 52:[2,1], 53:[1,5], 54:[2,3], 55:[2,0], 56:[1,2], 57:[3,1], 58:[1,1], 59:[2,4], 60:[1,0],
+    61:[2,0], 62:[2,1], 63:[3,2], 64:[0,1], 65:[2,4], 66:[1,3], 67:[2,1], 68:[2,1], 69:[4,1], 70:[0,2], 71:[1,3], 72:[2,2],
+  },
+  // Felipão — palpites enviados
+  "Felipão": {
+    1:[2,1], 2:[1,1], 3:[2,1], 4:[0,0], 5:[0,1], 6:[0,1], 7:[1,0], 8:[0,3], 9:[2,0], 10:[2,1], 11:[1,1], 12:[2,0],
+    13:[2,2], 14:[1,0], 15:[3,1], 16:[0,2], 17:[0,4], 18:[2,1], 19:[1,1], 20:[1,0], 21:[0,1], 22:[2,1], 23:[1,1], 24:[0,0],
+    25:[3,0], 26:[2,1], 27:[1,0], 28:[1,0], 29:[0,2], 30:[0,2], 31:[1,2], 32:[0,1], 33:[2,1], 34:[1,1], 35:[0,0], 36:[1,0],
+    37:[3,1], 38:[1,0], 39:[2,0], 40:[0,1], 41:[0,4], 42:[0,0], 43:[4,0], 44:[2,0], 45:[3,1], 46:[0,1], 47:[0,3], 48:[0,1],
+    49:[5,0], 50:[1,1], 51:[3,0], 52:[1,0], 53:[1,3], 54:[0,2], 55:[1,0], 56:[1,0], 57:[1,0], 58:[0,1], 59:[0,3], 60:[0,1],
+    61:[4,1], 62:[2,0], 63:[2,2], 64:[2,1], 65:[0,2], 66:[0,3], 67:[1,1], 68:[2,1], 69:[2,0], 70:[0,2], 71:[0,5], 72:[1,0],
+  },
+  // Renata Megale — palpites enviados
+  "Renata Megale": {
+    1:[2,0], 2:[0,0], 3:[1,0], 4:[1,2], 5:[1,2], 6:[2,0], 7:[2,0], 8:[0,3], 9:[2,1], 10:[2,0], 11:[1,0], 12:[0,0],
+    13:[2,0], 14:[3,0], 15:[2,1], 16:[0,0], 17:[0,3], 18:[0,2], 19:[3,1], 20:[2,2], 21:[2,0], 22:[2,1], 23:[3,2], 24:[0,0],
+    25:[4,0], 26:[1,1], 27:[2,0], 28:[2,0], 29:[0,1], 30:[0,0], 31:[3,0], 32:[2,1], 33:[3,2], 34:[0,1], 35:[0,5], 36:[0,2],
+    37:[4,1], 38:[0,1], 39:[1,0], 40:[1,0], 41:[1,2], 42:[0,0], 43:[4,0], 44:[2,0], 45:[3,1], 46:[2,1], 47:[1,3], 48:[0,1],
+    49:[3,0], 50:[2,0], 51:[3,1], 52:[0,0], 53:[0,2], 54:[0,2], 55:[3,1], 56:[1,1], 57:[4,0], 58:[0,0], 59:[0,2], 60:[0,0],
+    61:[4,0], 62:[0,0], 63:[3,1], 64:[1,1], 65:[0,2], 66:[1,1], 67:[0,0], 68:[2,0], 69:[3,0], 70:[0,0], 71:[0,0], 72:[0,0],
+  },
+  // Arthur — palpites enviados
+  "Arthur": {
+    1:[1,2], 2:[1,2], 3:[2,1], 4:[1,1], 5:[0,2], 6:[1,0], 7:[0,2], 8:[1,0], 9:[0,1], 10:[1,1], 11:[2,1], 12:[3,1],
+    13:[1,1], 14:[2,0], 15:[3,0], 16:[1,4], 17:[1,3], 18:[2,0], 19:[1,0], 20:[2,1], 21:[0,0], 22:[1,2], 23:[0,2], 24:[3,1],
+    25:[5,1], 26:[1,1], 27:[3,2], 28:[2,2], 29:[1,4], 30:[0,1], 31:[3,0], 32:[4,1], 33:[1,5], 34:[1,1], 35:[0,3], 36:[1,1],
+    37:[3,2], 38:[1,1], 39:[0,1], 40:[1,2], 41:[3,1], 42:[1,4], 43:[3,1], 44:[1,0], 45:[3,0], 46:[0,1], 47:[0,1], 48:[0,0],
+    49:[1,1], 50:[1,1], 51:[3,0], 52:[1,2], 53:[1,2], 54:[3,1], 55:[3,2], 56:[1,2], 57:[3,1], 58:[1,1], 59:[0,2], 60:[1,1],
+    61:[3,2], 62:[1,2], 63:[3,0], 64:[1,2], 65:[1,3], 66:[1,2], 67:[2,3], 68:[2,0], 69:[3,1], 70:[0,1], 71:[0,2], 72:[3,0],
+  },
+  // JORGE TIMERMAN CAMARGO (JTC) — palpites enviados em 09/06/2026
+  "JTC": {
+    1:[3,1], 2:[1,1], 3:[2,2], 4:[2,1], 5:[2,3], 6:[0,1],
+    7:[1,0], 8:[0,2], 9:[2,1], 10:[2,1], 11:[2,2], 12:[1,1],
+    13:[2,1], 14:[2,0], 15:[2,0], 16:[1,2], 17:[1,3], 18:[2,1],
+    19:[2,2], 20:[1,0], 21:[1,1], 22:[1,2], 23:[1,2], 24:[1,2],
+    25:[4,1], 26:[2,2], 27:[2,3], 28:[2,1], 29:[1,3], 30:[0,2],
+    31:[2,1], 32:[1,0], 33:[2,0], 34:[0,2], 35:[1,2], 36:[2,1],
+    37:[2,1], 38:[2,0], 39:[2,1], 40:[0,1], 41:[0,3], 42:[2,1],
+    43:[3,1], 44:[2,1], 45:[3,2], 46:[2,1], 47:[0,2], 48:[1,2],
+    49:[3,0], 50:[1,2], 51:[3,1], 52:[2,1], 53:[2,3], 54:[1,2],
+    55:[2,0], 56:[2,1], 57:[3,1], 58:[1,1], 59:[0,3], 60:[1,2],
+    61:[2,0], 62:[3,0], 63:[3,2], 64:[1,1], 65:[0,2], 66:[0,2],
+    67:[2,3], 68:[2,0], 69:[2,2], 70:[0,3], 71:[0,2], 72:[2,2],
+  },
+  // PATRICIA CHAGAS (Pati C.) — palpites enviados em 09/06/2026
+  "Pati C.": {
+    1:[2,0], 2:[2,1], 3:[1,1], 4:[0,0], 5:[0,1], 6:[1,0],
+    7:[1,0], 8:[0,2], 9:[2,0], 10:[1,0], 11:[2,0], 12:[0,1],
+    13:[1,1], 14:[1,0], 15:[2,1], 16:[0,3], 17:[0,4], 18:[2,0],
+    19:[2,1], 20:[3,0], 21:[1,1], 22:[1,3], 23:[0,2], 24:[0,0],
+    25:[6,1], 26:[1,2], 27:[2,2], 28:[3,1], 29:[1,3], 30:[0,2],
+    31:[2,1], 32:[0,1], 33:[2,0], 34:[0,2], 35:[0,1], 36:[1,1],
+    37:[0,1], 38:[1,0], 39:[1,0], 40:[0,2], 41:[0,3], 42:[0,0],
+    43:[4,1], 44:[0,0], 45:[2,0], 46:[1,0], 47:[0,2], 48:[0,2],
+    49:[3,0], 50:[0,1], 51:[2,1], 52:[2,0], 53:[1,2], 54:[1,1],
+    55:[3,0], 56:[0,0], 57:[2,1], 58:[0,1], 59:[0,2], 60:[0,1],
+    61:[4,1], 62:[3,1], 63:[2,2], 64:[1,0], 65:[1,2], 66:[0,1],
+    67:[1,1], 68:[3,0], 69:[1,0], 70:[0,2], 71:[1,3], 72:[2,0],
+  },
+  // DANILO DE CERQUEIRA CESAR (Danilo Zica) — palpites enviados em 11/06/2026
+  "Danilo Zica": {
+    1:[2,1], 2:[1,1], 3:[2,2], 4:[2,1], 5:[2,2], 6:[2,1],
+    7:[2,2], 8:[0,2], 9:[1,0], 10:[3,1], 11:[2,1], 12:[1,1],
+    13:[3,1], 14:[2,1], 15:[2,0], 16:[1,3], 17:[1,3], 18:[3,2],
+    19:[2,1], 20:[1,1], 21:[2,1], 22:[1,3], 23:[2,2], 24:[2,1],
+    25:[3,0], 26:[3,2], 27:[2,2], 28:[3,0], 29:[2,2], 30:[0,2],
+    31:[2,1], 32:[3,1], 33:[3,2], 34:[2,2], 35:[1,2], 36:[2,2],
+    37:[2,2], 38:[2,1], 39:[2,1], 40:[1,3], 41:[1,3], 42:[3,1],
+    43:[3,0], 44:[1,1], 45:[3,1], 46:[2,0], 47:[1,4], 48:[1,3],
+    49:[4,0], 50:[2,2], 51:[2,0], 52:[3,1], 53:[2,3], 54:[0,2],
+    55:[2,0], 56:[2,0], 57:[2,0], 58:[1,2], 59:[1,3], 60:[1,2],
+    61:[2,0], 62:[3,1], 63:[2,2], 64:[2,0], 65:[2,2], 66:[1,3],
+    67:[3,2], 68:[3,0], 69:[2,1], 70:[1,3], 71:[0,2], 72:[1,2],
+  },
+  // PEDRO TEIXEIRA DE CERQUEIRA CÉSAR (Pedro T) — palpites enviados em 10/06/2026
+  "Pedro T": {
+    1:[2,0], 2:[1,3], 3:[2,1], 4:[2,1], 5:[1,2], 6:[2,2],
+    7:[1,0], 8:[1,3], 9:[2,0], 10:[2,1], 11:[1,1], 12:[1,0],
+    13:[2,1], 14:[3,1], 15:[4,2], 16:[1,4], 17:[1,7], 18:[3,2],
+    19:[1,3], 20:[2,0], 21:[2,1], 22:[0,3], 23:[2,4], 24:[1,1],
+    25:[6,0], 26:[2,2], 27:[3,1], 28:[3,0], 29:[0,1], 30:[0,2],
+    31:[4,3], 32:[1,0], 33:[1,1], 34:[1,2], 35:[1,3], 36:[1,1],
+    37:[3,2], 38:[2,0], 39:[1,0], 40:[0,4], 41:[1,4], 42:[2,0],
+    43:[5,0], 44:[2,1], 45:[3,1], 46:[0,0], 47:[1,4], 48:[0,1],
+    49:[7,0], 50:[3,0], 51:[1,1], 52:[4,0], 53:[1,3], 54:[2,5],
+    55:[2,0], 56:[2,0], 57:[3,1], 58:[1,3], 59:[0,6], 60:[2,3],
+    61:[5,1], 62:[4,1], 63:[2,2], 64:[1,0], 65:[0,4], 66:[0,3],
+    67:[3,2], 68:[2,0], 69:[3,0], 70:[0,2], 71:[0,4], 72:[2,1],
+  },
+  // NATALIA JOELSAS TIMERMAN (Nati) — palpites enviados em 10/06/2026
+  "Nati": {
+    1:[3,0], 2:[1,1], 3:[2,2], 4:[0,1], 5:[0,1], 6:[0,2],
+    7:[2,1], 8:[2,0], 9:[1,3], 10:[1,1], 11:[0,2], 12:[1,3],
+    13:[3,0], 14:[3,1], 15:[1,1], 16:[1,2], 17:[1,2], 18:[1,3],
+    19:[1,1], 20:[2,0], 21:[1,2], 22:[1,3], 23:[2,1], 24:[2,2],
+    25:[3,0], 26:[1,2], 27:[1,1], 28:[2,0], 29:[1,4], 30:[2,3],
+    31:[2,0], 32:[1,0], 33:[3,1], 34:[1,1], 35:[1,2], 36:[1,1],
+    37:[2,0], 38:[1,0], 39:[3,1], 40:[1,2], 41:[1,3], 42:[1,1],
+    43:[2,0], 44:[2,0], 45:[3,1], 46:[1,2], 47:[2,1], 48:[1,2],
+    49:[3,1], 50:[1,1], 51:[0,0], 52:[1,2], 53:[0,2], 54:[0,0],
+    55:[2,0], 56:[1,1], 57:[1,0], 58:[1,2], 59:[1,3], 60:[0,1],
+    61:[4,0], 62:[2,1], 63:[3,2], 64:[1,1], 65:[1,4], 66:[1,2],
+    67:[3,2], 68:[2,1], 69:[1,2], 70:[0,0], 71:[1,2], 72:[3,1],
+  },
+  // ALICE CAROLO (Ali) — palpites enviados via Numbers
+  "Ali": {
+    1:[1,0], 2:[1,1], 3:[1,0], 4:[1,1], 5:[1,2], 6:[1,0],
+    7:[2,1], 8:[0,3], 9:[1,1], 10:[2,0], 11:[1,1], 12:[1,0],
+    13:[1,2], 14:[2,0], 15:[2,1], 16:[0,4], 17:[0,4], 18:[3,0],
+    19:[2,1], 20:[1,1], 21:[2,1], 22:[1,2], 23:[1,2], 24:[2,1],
+    25:[3,0], 26:[0,1], 27:[3,0], 28:[1,0], 29:[1,2], 30:[1,1],
+    31:[2,1], 32:[0,0], 33:[1,1], 34:[0,1], 35:[0,3], 36:[2,1],
+    37:[3,1], 38:[2,0], 39:[2,1], 40:[0,0], 41:[0,3], 42:[1,2],
+    43:[5,0], 44:[2,1], 45:[1,1], 46:[0,0], 47:[0,4], 48:[1,3],
+    49:[4,0], 50:[1,2], 51:[3,0], 52:[3,0], 53:[1,2], 54:[1,1],
+    55:[2,0], 56:[1,0], 57:[3,0], 58:[0,1], 59:[0,5], 60:[1,1],
+    61:[2,0], 62:[2,1], 63:[2,1], 64:[0,0], 65:[0,2], 66:[0,2],
+    67:[0,0], 68:[2,0], 69:[2,1], 70:[0,3], 71:[0,3], 72:[2,2],
+  },
+  // JOÃO GUILHERME DAL FABBRO (Jojota) — palpites enviados em 10/06/2026
+  "Jojota": {
+    1:[2,0], 2:[1,1], 3:[2,1], 4:[3,1], 5:[1,0], 6:[1,2],
+    7:[0,0], 8:[0,1], 9:[2,0], 10:[1,1], 11:[2,1], 12:[3,0],
+    13:[1,1], 14:[1,0], 15:[2,0], 16:[0,2], 17:[1,3], 18:[2,1],
+    19:[2,2], 20:[1,0], 21:[1,1], 22:[1,3], 23:[1,2], 24:[1,1],
+    25:[4,0], 26:[1,2], 27:[2,1], 28:[3,1], 29:[1,1], 30:[1,3],
+    31:[2,2], 32:[1,0], 33:[2,1], 34:[1,3], 35:[0,3], 36:[2,1],
+    37:[3,2], 38:[1,1], 39:[3,1], 40:[0,1], 41:[1,3], 42:[1,0],
+    43:[4,0], 44:[2,0], 45:[3,1], 46:[2,0], 47:[1,4], 48:[0,1],
+    49:[3,0], 50:[1,2], 51:[1,0], 52:[2,1], 53:[1,3], 54:[0,2],
+    55:[1,0], 56:[0,0], 57:[3,1], 58:[1,1], 59:[1,4], 60:[1,0],
+    61:[4,0], 62:[4,1], 63:[1,1], 64:[1,0], 65:[1,3], 66:[0,2],
+    67:[2,1], 68:[3,2], 69:[3,1], 70:[0,4], 71:[0,3], 72:[1,1],
+  },
+  // SAMUEL PESSOA VALENTE (Samuca) — palpites enviados em 10/06/2026
+  "Samuca": {
+    1:[2,0], 2:[2,1], 3:[1,1], 4:[1,0], 5:[1,1], 6:[0,1],
+    7:[1,0], 8:[0,2], 9:[1,0], 10:[1,0], 11:[1,1], 12:[0,0],
+    13:[2,0], 14:[1,0], 15:[2,0], 16:[0,2], 17:[1,3], 18:[2,1],
+    19:[1,2], 20:[2,0], 21:[1,1], 22:[0,2], 23:[1,2], 24:[2,1],
+    25:[3,0], 26:[3,1], 27:[2,1], 28:[2,0], 29:[0,2], 30:[1,3],
+    31:[2,1], 32:[2,1], 33:[1,0], 34:[0,2], 35:[0,3], 36:[2,1],
+    37:[2,1], 38:[1,1], 39:[2,0], 40:[0,1], 41:[0,2], 42:[2,1],
+    43:[5,1], 44:[2,1], 45:[4,2], 46:[1,0], 47:[0,2], 48:[0,2],
+    49:[4,0], 50:[2,2], 51:[1,2], 52:[2,0], 53:[1,3], 54:[0,2],
+    55:[2,0], 56:[1,0], 57:[2,1], 58:[0,0], 59:[0,2], 60:[0,1],
+    61:[4,0], 62:[3,0], 63:[3,2], 64:[0,0], 65:[1,3], 66:[1,2],
+    67:[2,1], 68:[2,1], 69:[1,1], 70:[0,1], 71:[1,4], 72:[2,1],
+  },
+  // GABRIELA JOELSAS TIMERMAN (Gabi Curintia) — palpites enviados em 10/06/2026
+  "Gabi Curintia": {
+    1:[3,0], 2:[0,4], 3:[2,0], 4:[4,1], 5:[1,1], 6:[2,1],
+    7:[2,0], 8:[0,1], 9:[2,0], 10:[2,1], 11:[2,2], 12:[3,1],
+    13:[1,0], 14:[2,0], 15:[2,1], 16:[0,3], 17:[0,2], 18:[2,2],
+    19:[0,2], 20:[2,1], 21:[0,4], 22:[1,1], 23:[5,0], 24:[2,2],
+    25:[4,0], 26:[3,2], 27:[3,1], 28:[2,0], 29:[1,2], 30:[1,1],
+    31:[5,0], 32:[3,1], 33:[3,0], 34:[1,1], 35:[0,3], 36:[1,2],
+    37:[2,0], 38:[0,1], 39:[3,0], 40:[1,1], 41:[0,2], 42:[0,0],
+    43:[2,0], 44:[3,0], 45:[1,1], 46:[1,2], 47:[1,5], 48:[1,2],
+    49:[3,0], 50:[2,1], 51:[2,1], 52:[4,1], 53:[3,1], 54:[0,3],
+    55:[3,0], 56:[0,0], 57:[4,1], 58:[1,3], 59:[0,6], 60:[1,2],
+    61:[2,0], 62:[0,0], 63:[2,1], 64:[3,2], 65:[1,2], 66:[1,4],
+    67:[0,1], 68:[3,1], 69:[1,2], 70:[0,4], 71:[1,3], 72:[3,1],
+  },
+};
+
+// Generate predictions per participant
+function generatePredictions() {
+  const out = {};
+  for (const name of PARTICIPANTS) {
+    out[name] = {};
+    // If we have manual predictions, use them
+    if (MANUAL_PREDICTIONS[name]) {
+      const manual = MANUAL_PREDICTIONS[name];
+      for (const m of MATCHES) {
+        if (m.phase === 'Grupos' && manual[m.num]) {
+          out[name][m.num] = manual[m.num];
+        }
+      }
+      continue;
+    }
+    // Otherwise, generate with seeded random (for original 5)
+    const rng = seededRandom(strHash(name));
+    for (const m of MATCHES) {
+      if (m.phase === 'Grupos') {
+        const a = weightedPick(rng, [0,1,2,3,4], [3,5,4,2,1]);
+        const b = weightedPick(rng, [0,1,2,3,4], [3,5,4,2,1]);
+        out[name][m.num] = [a, b];
+      }
+    }
+  }
+  return out;
+}
+
+const PREDICTIONS = generatePredictions();
+
+// Official scores — preencher conforme os jogos acontecem
+// Formato: { numero_do_jogo: [gols_A, gols_B] }
+// Exemplo: 1: [2,0]  (jogo 1: México 2x0 África do Sul)
+function generateOfficial() {
+  const out = {
+    // Cole aqui os placares oficiais conforme os jogos rolam
+  };
+  return out;
+}
+
+// OFFICIAL agora é editável pela interface e persistido no navegador (localStorage).
+// Ordem de prioridade ao carregar (do menor pro maior):
+//   generateOfficial() < seed embutido < results.json (automação) < edições locais (localStorage)
+// Ou seja: a automação preenche tudo sozinha, mas QUALQUER placar que você digitar à mão vence.
+const STORAGE_KEY = 'bolao_copa_2026_official';
+// Preenchido em runtime pelo fetch de results.json (gerado pela GitHub Action a partir do openfootball).
+let AUTO_RESULTS = {};
+function loadOfficial() {
+  const seed = (typeof window !== 'undefined' && window.__OFFICIAL_SEED__) ? window.__OFFICIAL_SEED__ : {};
+  let stored = {};
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) stored = JSON.parse(raw);
+  } catch (e) { /* localStorage indisponível (ex: rodando dentro de preview) */ }
+  return Object.assign({}, generateOfficial(), seed, AUTO_RESULTS, stored);
+}
+
+// Busca os placares automáticos (results.json ao lado do index.html no GitHub Pages).
+// Falha silenciosa: se não achar (ex: aberto via file://), a página segue com seed + localStorage.
+async function fetchAutoResults() {
+  try {
+    const resp = await fetch('results.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!resp.ok) return;
+    const data = await resp.json();
+    const clean = {};
+    for (const k of Object.keys(data)) {
+      const v = data[k];
+      if (Array.isArray(v) && v.length === 2 &&
+          Number.isInteger(v[0]) && Number.isInteger(v[1]) &&
+          v[0] >= 0 && v[0] <= 20 && v[1] >= 0 && v[1] <= 20) {
+        clean[k] = [v[0], v[1]];
+      }
+    }
+    AUTO_RESULTS = clean;
+    OFFICIAL = loadOfficial();
+    renderPlacares();
+    rerenderBackground();
+  } catch (e) { /* sem rede / arquivo ausente — ignora */ }
+}
+function saveOfficial() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(OFFICIAL)); } catch (e) {}
+}
+let OFFICIAL = loadOfficial();
+
+// Chamado quando a pessoa digita um placar
+function handleScoreInput(num) {
+  const aEl = document.getElementById('sa-' + num);
+  const bEl = document.getElementById('sb-' + num);
+  if (!aEl || !bEl) return;
+  const aRaw = aEl.value.trim();
+  const bRaw = bEl.value.trim();
+  if (aRaw === '' && bRaw === '') {
+    delete OFFICIAL[num];
+  } else if (aRaw === '' || bRaw === '') {
+    return; // só um campo preenchido — espera o outro, sem recalcular ainda
+  } else {
+    const a = Math.max(0, Math.min(20, parseInt(aRaw, 10) || 0));
+    const b = Math.max(0, Math.min(20, parseInt(bRaw, 10) || 0));
+    OFFICIAL[num] = [a, b];
+    aEl.value = a; bEl.value = b;
+    aEl.classList.add('filled'); bEl.classList.add('filled');
+  }
+  saveOfficial();
+  rerenderBackground();
+}
+
+// Re-renderiza tudo EXCETO a aba de placares (pra não recriar os inputs que estão sendo usados)
+function rerenderBackground() {
+  renderRanking();
+  renderBracket();
+  renderStats();
+  renderParticipantes();
+  const c = document.getElementById('placares-count');
+  if (c) c.textContent = MATCHES.filter(m => OFFICIAL[m.num]).length;
+}
+
+function exportResultsJSON() {
+  const blob = new Blob([JSON.stringify(OFFICIAL, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'resultados_bolao_2026.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importResultsJSON(ev) {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      const clean = {};
+      let bad = 0;
+      for (const k of Object.keys(data)) {
+        const v = data[k];
+        if (Array.isArray(v) && v.length === 2 &&
+            Number.isInteger(v[0]) && Number.isInteger(v[1]) &&
+            v[0] >= 0 && v[0] <= 20 && v[1] >= 0 && v[1] <= 20) {
+          clean[k] = [v[0], v[1]];
+        } else { bad++; }
+      }
+      OFFICIAL = Object.assign({}, OFFICIAL, clean);
+      saveOfficial();
+      renderPlacares();
+      rerenderBackground();
+      alert('Importados ' + Object.keys(clean).length + ' jogos.' + (bad ? ' (' + bad + ' entradas inválidas ignoradas)' : ''));
+    } catch (e) {
+      alert('Arquivo inválido — esperado um JSON de resultados.');
+    }
+  };
+  reader.readAsText(file);
+  ev.target.value = '';
+}
+
+function clearAllResults() {
+  if (!confirm('Apagar TODOS os resultados inseridos?\n\nOs palpites dos participantes NÃO são afetados.')) return;
+  OFFICIAL = {};
+  saveOfficial();
+  renderPlacares();
+  rerenderBackground();
+}
+
+// Gera uma cópia do HTML com os resultados atuais embutidos, pra distribuir aos amigos
+function exportFrozenHTML() {
+  const clone = document.documentElement.cloneNode(true);
+  clone.querySelectorAll('.tab-content').forEach(el => { el.innerHTML = ''; el.classList.remove('active'); });
+  clone.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const rkBtn = clone.querySelector('.tab-btn[data-tab="ranking"]');
+  if (rkBtn) rkBtn.classList.add('active');
+  const rkContent = clone.querySelector('#ranking');
+  if (rkContent) rkContent.classList.add('active');
+  clone.querySelectorAll('script[data-seed]').forEach(el => el.remove());
+  const seed = document.createElement('script');
+  seed.setAttribute('data-seed', '1');
+  seed.textContent = 'window.__OFFICIAL_SEED__ = ' + JSON.stringify(OFFICIAL) + ';';
+  const body = clone.querySelector('body');
+  body.insertBefore(seed, body.firstChild);
+  const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'bolao_copa_2026_' + new Date().toISOString().slice(0, 10) + '.html';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Scoring function
+function calculatePoints(pred, official, multiplier) {
+  if (!pred || !official) return null;
+  const [pA, pB] = pred;
+  const [oA, oB] = official;
+  if (pA === oA && pB === oB) return 10 * multiplier;
+  if (pA === pB && oA === oB) return 4 * multiplier;
+  const pDiff = pA - pB, oDiff = oA - oB;
+  if (Math.sign(pDiff) === Math.sign(oDiff) && pDiff !== 0) {
+    if (pDiff === oDiff) return 5 * multiplier;
+    return 3 * multiplier;
+  }
+  return 0;
+}
+
+function totalPoints(participant) {
+  let total = 0;
+  let byPhase = {};
+  let exactCount = 0;
+  let winnerCount = 0;
+  for (const m of MATCHES) {
+    const pred = PREDICTIONS[participant]?.[m.num];
+    const off = OFFICIAL[m.num];
+    const p = calculatePoints(pred, off, m.mult);
+    if (p !== null) {
+      total += p;
+      byPhase[m.phase] = (byPhase[m.phase] || 0) + p;
+      if (p === 10 * m.mult) exactCount++;
+      else if (p > 0) winnerCount++;
+    }
+  }
+  return { total, byPhase, exactCount, winnerCount };
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function flagSpan(code) {
+  return `<span class="fi fi-${code}"></span>`;
+}
+function teamCell(team, side) {
+  if (!team) return `<span style="color: var(--text-muted); font-style: italic;">— a definir —</span>`;
+  const [name, code] = team;
+  if (side === 'a') {
+    return `<span class="flag-cell"><span class="name-text">${name}</span>${flagSpan(code)}</span>`;
+  }
+  return `<span class="flag-cell">${flagSpan(code)}<span class="name-text">${name}</span></span>`;
+}
+function phasePill(phase) {
+  const cls = phase === 'Grupos' ? 'grupos'
+    : phase === 'R32' ? 'r32'
+    : phase === 'R16' ? 'r16'
+    : phase === 'Quartas' ? 'qf'
+    : phase === 'Semis' ? 'sf'
+    : phase === '3º Lugar' ? 'terceiro'
+    : 'final';
+  return `<span class="pill ${cls}">${phase}</span>`;
+}
+function pointsBadge(pts, max=10) {
+  if (pts === null) return `<span class="points-badge empty">—</span>`;
+  if (pts === 0) return `<span class="points-badge zero">0</span>`;
+  if (pts >= max * 0.8) return `<span class="points-badge high">${pts}</span>`;
+  if (pts >= max * 0.4) return `<span class="points-badge mid">${pts}</span>`;
+  return `<span class="points-badge low">${pts}</span>`;
+}
+
+// ----- Ranking tab -----
+function renderRanking() {
+  const standings = PARTICIPANTS.map(name => ({ name, ...totalPoints(name) }))
+    .sort((a, b) => b.total - a.total || b.exactCount - a.exactCount);
+
+  const podium = `
+    <div class="podium">
+      ${standings[1] ? `<div class="podium-place second">
+        <div class="medal">2</div>
+        <div class="name">${standings[1].name}</div>
+        <div class="points">${standings[1].total}</div>
+        <div class="points-label">pontos</div>
+      </div>` : ''}
+      <div class="podium-place first">
+        <div class="medal">1</div>
+        <div class="name">${standings[0].name}</div>
+        <div class="points">${standings[0].total}</div>
+        <div class="points-label">pontos</div>
+      </div>
+      ${standings[2] ? `<div class="podium-place third">
+        <div class="medal">3</div>
+        <div class="name">${standings[2].name}</div>
+        <div class="points">${standings[2].total}</div>
+        <div class="points-label">pontos</div>
+      </div>` : ''}
+    </div>
+  `;
+
+  const rows = standings.map((s, i) => {
+    const cls = i === 0 ? 'first' : i === 1 ? 'second' : i === 2 ? 'third' : '';
+    return `<tr class="${cls}">
+      <td class="num">${i+1}º</td>
+      <td class="name">${s.name}</td>
+      <td class="phase-pts">${s.byPhase['Grupos'] || 0}</td>
+      <td class="phase-pts">${s.byPhase['R32'] || 0}</td>
+      <td class="phase-pts">${s.byPhase['R16'] || 0}</td>
+      <td class="phase-pts">${s.byPhase['Quartas'] || 0}</td>
+      <td class="phase-pts">${s.byPhase['Semis'] || 0}</td>
+      <td class="phase-pts">${s.byPhase['Final'] || 0}</td>
+      <td class="phase-pts">${s.exactCount}</td>
+      <td class="total">${s.total}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('ranking').innerHTML = `
+    ${podium}
+    <div class="card">
+      <div class="card-header">
+        <h2>Classificação Detalhada</h2>
+        <span style="font-size: 12px; color: var(--text-muted);">${Object.keys(OFFICIAL).length} de ${MATCHES.length} jogos apurados</span>
+      </div>
+      <table class="ranking">
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th>Participante</th>
+            <th>Grupos</th>
+            <th>R32</th>
+            <th>R16</th>
+            <th>QF</th>
+            <th>SF</th>
+            <th>Final</th>
+            <th>Exatos</th>
+            <th style="text-align: right;">Total</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ----- Placares Oficiais tab -----
+let placaresFilter = 'all';
+function renderPlacares() {
+  const filled = MATCHES.filter(m => OFFICIAL[m.num]).length;
+  const total = MATCHES.length;
+
+  const actionBar = `
+    <div class="card" style="margin-bottom: 12px;">
+      <div class="card-body action-bar">
+        <div style="font-size: 13px; color: var(--text-muted);">
+          <strong id="placares-count" style="color: var(--navy); font-size: 18px;">${filled}</strong> de ${total} jogos preenchidos
+        </div>
+        <div class="btns">
+          <button class="io-btn" onclick="exportResultsJSON()">⬇️ Exportar (JSON)</button>
+          <button class="io-btn" onclick="document.getElementById('import-file').click()">⬆️ Importar (JSON)</button>
+          <button class="io-btn primary" onclick="exportFrozenHTML()">📦 Exportar página com resultados</button>
+          <button class="io-btn danger" onclick="clearAllResults()">🗑️ Limpar</button>
+          <input type="file" id="import-file" accept="application/json,.json" style="display:none" onchange="importResultsJSON(event)">
+        </div>
+      </div>
+    </div>
+    <div class="results-hint">
+      Digite o placar de cada jogo nos campos. O ranking e as estatísticas recalculam automaticamente.
+      Deixe em branco os jogos que ainda não aconteceram. Para distribuir aos amigos com os resultados já preenchidos, use <strong>"Exportar página com resultados"</strong>.
+    </div>
+  `;
+
+  const filterBtns = `
+    <div class="filter-bar">
+      <label>Fase:</label>
+      <button data-filter="all" class="${placaresFilter==='all'?'active':''}">Todos</button>
+      <button data-filter="Grupos" class="${placaresFilter==='Grupos'?'active':''}">Grupos</button>
+      <button data-filter="R32" class="${placaresFilter==='R32'?'active':''}">R32</button>
+      <button data-filter="R16" class="${placaresFilter==='R16'?'active':''}">Oitavas</button>
+      <button data-filter="Quartas" class="${placaresFilter==='Quartas'?'active':''}">Quartas</button>
+      <button data-filter="Semis" class="${placaresFilter==='Semis'?'active':''}">Semis</button>
+      <button data-filter="Final" class="${placaresFilter==='Final'?'active':''}">Final</button>
+    </div>
+  `;
+
+  const filtered = placaresFilter === 'all' ? MATCHES : MATCHES.filter(m => m.phase === placaresFilter);
+  
+  let html = '';
+  let currentSubphase = null;
+  for (const m of filtered) {
+    const subhead = m.phase === 'Grupos' ? `${m.subphase} · Rodada ${m.rodada}` : `${m.subphase} · Jogo ${m.rodada}`;
+    if (subhead !== currentSubphase) {
+      if (currentSubphase !== null) html += '</tbody></table></div>';
+      currentSubphase = subhead;
+      html += `<div class="card" style="margin-bottom: 12px;">
+        <div class="card-header" style="background: var(--bg);"><h2>${subhead}</h2></div>
+        <table class="games">
+          <thead>
+            <tr>
+              <th class="num">#</th>
+              <th class="phase">Fase</th>
+              <th style="text-align:right;">Seleção A</th>
+              <th class="center">Placar</th>
+              <th>Seleção B</th>
+            </tr>
+          </thead>
+          <tbody>`;
+    }
+    const off = OFFICIAL[m.num];
+    const aVal = off ? off[0] : '';
+    const bVal = off ? off[1] : '';
+    const fillCls = off ? ' filled' : '';
+    const scoreCell = `<input class="score-input${fillCls}" type="number" inputmode="numeric" min="0" max="20" id="sa-${m.num}" value="${aVal}" onchange="handleScoreInput(${m.num})"><span class="score-input-x">x</span><input class="score-input${fillCls}" type="number" inputmode="numeric" min="0" max="20" id="sb-${m.num}" value="${bVal}" onchange="handleScoreInput(${m.num})">`;
+    html += `<tr>
+      <td class="num">${m.num}</td>
+      <td class="phase">${phasePill(m.phase)}</td>
+      <td class="team-a">${teamCell(m.teamA, 'a')}</td>
+      <td class="score" style="white-space:nowrap;">${scoreCell}</td>
+      <td class="team-b">${teamCell(m.teamB, 'b')}</td>
+    </tr>`;
+  }
+  html += '</tbody></table></div>';
+
+  document.getElementById('placares').innerHTML = actionBar + filterBtns + html;
+
+  document.querySelectorAll('#placares .filter-bar button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      placaresFilter = btn.dataset.filter;
+      renderPlacares();
+    });
+  });
+}
+
+// ----- Participantes tab -----
+let currentParticipant = PARTICIPANTS[0];
+function renderParticipantes() {
+  const btns = PARTICIPANTS.map(p => {
+    const isAI = ['Claude', 'ChatGPT', 'Grok'].includes(p);
+    const aiColor = p === 'Claude' ? '#D97757' : p === 'ChatGPT' ? '#10A37F' : p === 'Grok' ? '#1DA1F2' : null;
+    const avatarStyle = isAI ? `background: ${aiColor};` : '';
+    const icon = isAI ? '🤖 ' : '';
+    return `<button class="${p===currentParticipant?'active':''}" data-participant="${p}">
+      <span class="avatar" style="${avatarStyle}">${p[0]}</span>${icon}${p}
+    </button>`;
+  }).join('');
+
+  const data = totalPoints(currentParticipant);
+  const par = PARALELO[currentParticipant];
+  const parVal = (t) => t ? `${flagSpan(t[1])} ${t[0]}` : '<span style="color:var(--text-muted);font-style:italic;">— em branco —</span>';
+  const parTop = par.topScorer || '<span style="color:var(--text-muted);font-style:italic;">— em branco —</span>';
+
+  const participantCard = `
+    <div class="card participant-card">
+      <div class="card-body">
+        <h3>${currentParticipant}</h3>
+        <div class="meta">Palpites enviados em 10/06/2026</div>
+        <div class="summary">
+          <div class="summary-item">
+            <div class="label">Pontos Totais</div>
+            <div class="value">${data.total}</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Placares Exatos</div>
+            <div class="value">${data.exactCount}</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Acertos Vencedor</div>
+            <div class="value">${data.winnerCount}</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Pontos Grupos</div>
+            <div class="value">${data.byPhase['Grupos'] || 0}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const paraleloHtml = `
+    <div class="card">
+      <div class="card-header"><h2>Bolão Paralelo</h2><span style="font-size:11px;color:var(--text-muted);">a apurar no final da Copa</span></div>
+      <div class="card-body">
+        <div class="paralelo-grid">
+          <div class="paralelo-item">
+            <div class="label">Campeão</div>
+            <div class="value">${parVal(par.champion)}</div>
+            <div class="pts">vale 20 pts</div>
+          </div>
+          <div class="paralelo-item">
+            <div class="label">Vice-campeão</div>
+            <div class="value">${parVal(par.vice)}</div>
+            <div class="pts">vale 10 pts</div>
+          </div>
+          <div class="paralelo-item">
+            <div class="label">3º Lugar</div>
+            <div class="value">${parVal(par.third)}</div>
+            <div class="pts">vale 5 pts</div>
+          </div>
+          <div class="paralelo-item">
+            <div class="label">4º Lugar</div>
+            <div class="value">${parVal(par.fourth)}</div>
+            <div class="pts">vale 5 pts</div>
+          </div>
+          <div class="paralelo-item">
+            <div class="label">Artilheiro</div>
+            <div class="value">${parTop}</div>
+            <div class="pts">vale 10 pts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Show all group stage matches with their predictions
+  let gamesHtml = `<div class="card">
+    <div class="card-header"><h2>Palpites — Fase de Grupos</h2><span style="font-size:11px;color:var(--text-muted);">${data.byPhase['Grupos'] || 0} pts de 720 possíveis</span></div>
+    <table class="games">
+      <thead>
+        <tr>
+          <th class="num">#</th>
+          <th class="phase">Fase</th>
+          <th style="text-align:right;">Seleção A</th>
+          <th class="center">Palpite</th>
+          <th class="center">Oficial</th>
+          <th>Seleção B</th>
+          <th style="text-align:right;">Pontos</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+  let currentGroup = null;
+  for (const m of MATCHES) {
+    if (m.phase !== 'Grupos') continue;
+    if (m.subphase !== currentGroup) {
+      currentGroup = m.subphase;
+      gamesHtml += `<tr class="group-header"><td colspan="7">${m.subphase}</td></tr>`;
+    }
+    const pred = PREDICTIONS[currentParticipant][m.num];
+    const off = OFFICIAL[m.num];
+    const pts = calculatePoints(pred, off, m.mult);
+    const isExact = pts !== null && pts === 10 * m.mult;
+    const predCell = pred ? `${pred[0]} <span style="color:var(--text-muted);">x</span> ${pred[1]}` : '—';
+    const offCell = off ? `<strong>${off[0]} <span style="color:var(--text-muted);font-weight:400;">x</span> ${off[1]}</strong>` : '<span style="color:var(--text-muted);font-style:italic;font-size:12px;">aguardando</span>';
+    gamesHtml += `<tr${isExact ? ' class="exact-score"' : ''}>
+      <td class="num">${m.num}</td>
+      <td class="phase">${phasePill(m.phase)}</td>
+      <td class="team-a">${teamCell(m.teamA, 'a')}</td>
+      <td class="score" style="font-size:14px;">${predCell}</td>
+      <td class="score" style="font-size:14px;">${offCell}</td>
+      <td class="team-b">${teamCell(m.teamB, 'b')}</td>
+      <td class="points">${pointsBadge(pts, 10)}</td>
+    </tr>`;
+  }
+  gamesHtml += '</tbody></table></div>';
+
+  document.getElementById('participantes').innerHTML = `
+    <div class="participant-tabs">${btns}</div>
+    ${participantCard}
+    ${paraleloHtml}
+    ${gamesHtml}
+  `;
+
+  document.querySelectorAll('#participantes .participant-tabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentParticipant = btn.dataset.participant;
+      renderParticipantes();
+    });
+  });
+}
+
+// ----- Regras tab -----
+function renderRegras() {
+  document.getElementById('regras').innerHTML = `
+    <div class="card">
+      <div class="card-header"><h2>Pontuação por Jogo</h2></div>
+      <div class="card-body">
+        <table class="rules-table">
+          <tbody>
+            <tr><td>Placar exato (ex: previu 2x1, deu 2x1)</td><td class="right">10 pontos</td></tr>
+            <tr><td>Acertou vencedor + diferença de gols (2x1, deu 3x2)</td><td class="right">5 pontos</td></tr>
+            <tr><td>Acertou só o vencedor (2x1, deu 4x0)</td><td class="right">3 pontos</td></tr>
+            <tr><td>Acertou empate mas placar errado (1x1, deu 2x2)</td><td class="right">4 pontos</td></tr>
+            <tr><td>Errou tudo</td><td class="right">0 pontos</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h2>Multiplicadores por Fase</h2></div>
+      <div class="card-body">
+        <table class="rules-table">
+          <thead>
+            <tr>
+              <th>Fase</th>
+              <th class="right">Multiplicador</th>
+              <th class="right">Máx por jogo</th>
+              <th class="right">Nº jogos</th>
+              <th class="right">Máx da fase</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Fase de Grupos</td><td class="right">1x</td><td class="right">10</td><td class="right">72</td><td class="right">720</td></tr>
+            <tr><td>Round of 32</td><td class="right">2x</td><td class="right">20</td><td class="right">16</td><td class="right">320</td></tr>
+            <tr><td>Oitavas (R16)</td><td class="right">2x</td><td class="right">20</td><td class="right">8</td><td class="right">160</td></tr>
+            <tr><td>Quartas</td><td class="right">3x</td><td class="right">30</td><td class="right">4</td><td class="right">120</td></tr>
+            <tr><td>Semifinais</td><td class="right">4x</td><td class="right">40</td><td class="right">2</td><td class="right">80</td></tr>
+            <tr><td>3º Lugar</td><td class="right">3x</td><td class="right">30</td><td class="right">1</td><td class="right">30</td></tr>
+            <tr><td><strong>FINAL</strong></td><td class="right">5x</td><td class="right">50</td><td class="right">1</td><td class="right">50</td></tr>
+            <tr><td>Bolão paralelo</td><td class="right">—</td><td class="right">—</td><td class="right">—</td><td class="right">50</td></tr>
+            <tr class="total"><td>TOTAL MÁXIMO</td><td class="right">—</td><td class="right">—</td><td class="right">104</td><td class="right">1.530</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h2>Bolão Paralelo</h2></div>
+      <div class="card-body">
+        <p style="margin-bottom:12px; font-size: 14px; color: var(--text-muted);">Palpitar ANTES do início da Copa (11/06/2026):</p>
+        <table class="rules-table">
+          <tbody>
+            <tr><td>Campeão</td><td class="right">20 pontos</td></tr>
+            <tr><td>Vice-campeão</td><td class="right">10 pontos</td></tr>
+            <tr><td>3º lugar</td><td class="right">5 pontos</td></tr>
+            <tr><td>4º lugar</td><td class="right">5 pontos</td></tr>
+            <tr><td>Artilheiro</td><td class="right">10 pontos</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h2>Critérios de Desempate</h2></div>
+      <div class="card-body">
+        <ol style="margin-left: 20px; font-size: 14px; line-height: 2;">
+          <li>Mais placares exatos</li>
+          <li>Mais acertos de vencedor</li>
+          <li>Maior pontuação na fase de grupos</li>
+          <li>Sorteio</li>
+        </ol>
+      </div>
+    </div>
+  `;
+}
+
+// ----- Chaveamento (bracket) tab -----
+function renderBracket() {
+  // KO matches in order: 16 R32, 8 R16, 4 QF, 2 SF, 1 3rd, 1 Final
+  const koMatches = MATCHES.filter(m => m.phase !== 'Grupos');
+  const byPhase = {};
+  for (const m of koMatches) {
+    if (!byPhase[m.phase]) byPhase[m.phase] = [];
+    byPhase[m.phase].push(m);
+  }
+
+  function bracketMatchHtml(m, extraClass = '') {
+    const off = OFFICIAL[m.num];
+    const aScore = off ? off[0] : null;
+    const bScore = off ? off[1] : null;
+    const aWinner = off && aScore > bScore;
+    const bWinner = off && bScore > aScore;
+    const teamA = m.teamA;
+    const teamB = m.teamB;
+    
+    const teamHtml = (team, side, isWinner) => {
+      if (!team) {
+        return `<div class="bracket-team empty"><span class="team-info">— a definir —</span><span class="score">-</span></div>`;
+      }
+      const [name, code] = team;
+      const score = side === 'a' ? aScore : bScore;
+      return `<div class="bracket-team ${isWinner ? 'winner' : ''}">
+        <span class="team-info">${flagSpan(code)}<span>${name}</span></span>
+        <span class="score">${score !== null ? score : '-'}</span>
+      </div>`;
+    };
+    
+    return `<div class="bracket-match ${extraClass}">
+      ${teamHtml(teamA, 'a', aWinner)}
+      ${teamHtml(teamB, 'b', bWinner)}
+    </div>`;
+  }
+
+  const r32Html = (byPhase['R32'] || []).map(m => bracketMatchHtml(m)).join('');
+  const r16Html = (byPhase['R16'] || []).map(m => bracketMatchHtml(m)).join('');
+  const qfHtml = (byPhase['Quartas'] || []).map(m => bracketMatchHtml(m)).join('');
+  const sfHtml = (byPhase['Semis'] || []).map(m => bracketMatchHtml(m)).join('');
+  const finalHtml = (byPhase['Final'] || []).map(m => bracketMatchHtml(m, 'final')).join('');
+  const thirdHtml = (byPhase['3º Lugar'] || []).map(m => bracketMatchHtml(m, 'third')).join('');
+
+  document.getElementById('bracket').innerHTML = `
+    <div class="card">
+      <div class="card-header">
+        <h2>Chaveamento — Mata-Mata</h2>
+        <span style="font-size:11px;color:var(--text-muted);">role para o lado em telas menores</span>
+      </div>
+      <div class="card-body" style="padding: 12px;">
+        <div class="bracket-wrap">
+          <div class="bracket">
+            <div class="bracket-col col-r32">
+              <div class="bracket-col-title">Round of 32</div>
+              ${r32Html}
+            </div>
+            <div class="bracket-col col-r16">
+              <div class="bracket-col-title">Oitavas</div>
+              ${r16Html}
+            </div>
+            <div class="bracket-col col-qf">
+              <div class="bracket-col-title">Quartas</div>
+              ${qfHtml}
+            </div>
+            <div class="bracket-col col-sf">
+              <div class="bracket-col-title">Semifinais</div>
+              ${sfHtml}
+            </div>
+            <div class="bracket-col col-final">
+              <div class="bracket-col-title" style="background: var(--gold); color: white;">FINAL</div>
+              ${finalHtml}
+              <div class="bracket-col-title" style="background: var(--bronze); color: white; margin-top: 16px;">3º Lugar</div>
+              ${thirdHtml}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ----- Estatísticas tab -----
+function renderStats() {
+  // Stat 1: Pontuação por participante por fase (stacked bar)
+  const standings = PARTICIPANTS.map(name => ({ name, ...totalPoints(name) }));
+  const maxTotal = Math.max(...standings.map(s => s.total), 1);
+
+  let pointsBar = '<div class="bar-chart">';
+  for (const s of [...standings].sort((a,b) => b.total - a.total)) {
+    const pct = (s.total / maxTotal) * 100;
+    pointsBar += `<div class="bar-row">
+      <div class="bar-label">${s.name}</div>
+      <div class="bar-track"><div class="bar-fill gold" style="width: ${pct}%;"></div></div>
+      <div class="bar-value">${s.total}</div>
+    </div>`;
+  }
+  pointsBar += '</div>';
+
+  // Stat 2: Placares exatos por participante
+  const maxExact = Math.max(...standings.map(s => s.exactCount), 1);
+  let exactBar = '<div class="bar-chart">';
+  for (const s of [...standings].sort((a,b) => b.exactCount - a.exactCount)) {
+    const pct = (s.exactCount / maxExact) * 100;
+    exactBar += `<div class="bar-row">
+      <div class="bar-label">${s.name}</div>
+      <div class="bar-track"><div class="bar-fill green" style="width: ${pct}%;"></div></div>
+      <div class="bar-value">${s.exactCount}</div>
+    </div>`;
+  }
+  exactBar += '</div>';
+
+  // Stat 3: Acertos de vencedor por participante
+  const maxWinner = Math.max(...standings.map(s => s.winnerCount), 1);
+  let winnerBar = '<div class="bar-chart">';
+  for (const s of [...standings].sort((a,b) => b.winnerCount - a.winnerCount)) {
+    const pct = (s.winnerCount / maxWinner) * 100;
+    winnerBar += `<div class="bar-row">
+      <div class="bar-label">${s.name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width: ${pct}%;"></div></div>
+      <div class="bar-value">${s.winnerCount}</div>
+    </div>`;
+  }
+  winnerBar += '</div>';
+
+  // Stat 4: Seleções mais palpitadas como Campeão (paralelo)
+  const championCounts = {};
+  for (const name of PARTICIPANTS) {
+    const champ = PARALELO[name].champion[0];
+    const code = PARALELO[name].champion[1];
+    if (!championCounts[champ]) championCounts[champ] = { count: 0, code };
+    championCounts[champ].count++;
+  }
+  let champHtml = '';
+  const sortedChamp = Object.entries(championCounts).sort((a,b) => b[1].count - a[1].count);
+  for (const [team, data] of sortedChamp) {
+    champHtml += `<div class="team-tally">
+      <span class="flag-cell">${flagSpan(data.code)}<span>${team}</span></span>
+      <span class="pick-count">${data.count} ${data.count === 1 ? 'palpite' : 'palpites'}</span>
+    </div>`;
+  }
+
+  // Stat 5: Total de jogos com placar oficial
+  const officialCount = Object.keys(OFFICIAL).length;
+  const totalGames = MATCHES.length;
+  const progressPct = (officialCount / totalGames) * 100;
+
+  // Stat 6: Média de gols nos jogos oficiais
+  let totalGoals = 0;
+  for (const k of Object.keys(OFFICIAL)) {
+    totalGoals += OFFICIAL[k][0] + OFFICIAL[k][1];
+  }
+  const avgGoals = officialCount > 0 ? (totalGoals / officialCount).toFixed(2) : '—';
+
+  document.getElementById('stats').innerHTML = `
+    <div class="card">
+      <div class="card-header">
+        <h2>Progresso do Bolão</h2>
+        <span style="font-size:11px;color:var(--text-muted);">${officialCount} de ${totalGames} jogos</span>
+      </div>
+      <div class="card-body">
+        <div class="bar-row" style="grid-template-columns: 1fr 70px;">
+          <div class="bar-track" style="height: 28px;">
+            <div class="bar-fill gold" style="width: ${progressPct}%;"></div>
+          </div>
+          <div class="bar-value">${progressPct.toFixed(1)}%</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 16px;">
+          <div style="background: var(--bg); padding: 12px; border-radius: 8px;">
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px;">Jogos apurados</div>
+            <div style="font-size: 24px; font-weight: 800; color: var(--navy); margin-top: 4px;">${officialCount}</div>
+          </div>
+          <div style="background: var(--bg); padding: 12px; border-radius: 8px;">
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px;">Total de gols</div>
+            <div style="font-size: 24px; font-weight: 800; color: var(--navy); margin-top: 4px;">${totalGoals}</div>
+          </div>
+          <div style="background: var(--bg); padding: 12px; border-radius: 8px;">
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px;">Média gols/jogo</div>
+            <div style="font-size: 24px; font-weight: 800; color: var(--navy); margin-top: 4px;">${avgGoals}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="card">
+        <div class="card-header"><h2>Pontuação Total</h2></div>
+        <div class="card-body">${pointsBar}</div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2>Placares Exatos</h2></div>
+        <div class="card-body">${exactBar}</div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2>Acertos de Vencedor</h2></div>
+        <div class="card-body">${winnerBar}</div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2>Apostas no Campeão</h2></div>
+        <div class="card-body">${champHtml || '<p style="color: var(--text-muted);">Nenhum palpite enviado.</p>'}</div>
+      </div>
+    </div>
+  `;
+}
+
+// ----- Análise AI tab -----
+function analyzeParticipant(name) {
+  const preds = PREDICTIONS[name];
+  const groupPreds = MATCHES.filter(m => m.phase === 'Grupos').map(m => ({ m, pred: preds[m.num] }));
+  const validPreds = groupPreds.filter(x => x.pred);
+  
+  if (validPreds.length === 0) return null;
+  
+  const flags = [];
+  let totalScore = 0;
+  
+  // ============== HEURISTIC 1: Distribuição de placares ==============
+  // Humanos: muitos 0-2 gols, poucas goleadas. AI: distribuição mais uniforme.
+  const allGoals = [];
+  for (const x of validPreds) {
+    allGoals.push(x.pred[0], x.pred[1]);
+  }
+  const goalDist = { 0: 0, 1: 0, 2: 0, 3: 0, '4+': 0 };
+  for (const g of allGoals) {
+    if (g >= 4) goalDist['4+']++;
+    else goalDist[g]++;
+  }
+  const totalGoals = allGoals.length;
+  const pctZero = goalDist[0] / totalGoals;
+  const pctOne = goalDist[1] / totalGoals;
+  const pctTwo = goalDist[2] / totalGoals;
+  const pctHigh = (goalDist[3] + goalDist['4+']) / totalGoals;
+  
+  // Padrão humano típico: ~22% zeros, ~35% uns, ~25% dois, ~18% 3+
+  // AI tende a achatar essa distribuição
+  let distScore = 0;
+  const lowsPct = pctZero + pctOne;
+  if (lowsPct < 0.45) distScore += 25; // poucos placares baixos = suspeito
+  else if (lowsPct < 0.55) distScore += 10;
+  if (pctHigh > 0.25) distScore += 20; // muitos 3+ gols = suspeito
+  else if (pctHigh > 0.18) distScore += 8;
+  
+  flags.push({
+    title: 'Distribuição de placares',
+    score: distScore,
+    detail: `${(pctZero*100).toFixed(0)}% zeros · ${(pctOne*100).toFixed(0)}% uns · ${(pctTwo*100).toFixed(0)}% dois · ${(pctHigh*100).toFixed(0)}% três+. Padrão humano típico tem ~55-60% de gols 0-1.`,
+    threshold: 30,
+  });
+  totalScore += distScore;
+  
+  // ============== HEURISTIC 2: Goleadas (placares com diff >= 3) ==============
+  let goleadas = 0;
+  let placaresMuito = 0;
+  for (const x of validPreds) {
+    if (Math.abs(x.pred[0] - x.pred[1]) >= 3) goleadas++;
+    if (x.pred[0] + x.pred[1] >= 5) placaresMuito++;
+  }
+  const pctGoleada = goleadas / validPreds.length;
+  const pctMuitoGol = placaresMuito / validPreds.length;
+  
+  let goleScore = 0;
+  if (pctGoleada < 0.04) goleScore += 15; // muito poucas = AI conservadora
+  else if (pctGoleada > 0.20) goleScore += 20; // muitas = AI random
+  if (pctMuitoGol > 0.15) goleScore += 10;
+  
+  flags.push({
+    title: 'Goleadas (diff ≥ 3 gols)',
+    score: goleScore,
+    detail: `${goleadas} goleadas em ${validPreds.length} jogos (${(pctGoleada*100).toFixed(0)}%). Humanos chutam entre 5-15% de goleadas tipicamente.`,
+    threshold: 20,
+  });
+  totalScore += goleScore;
+  
+  // ============== HEURISTIC 3: Repetição do placar mais usado ==============
+  // Humanos têm "placar preferido" (ex: chuta 2x1 toda hora). AI varia mais.
+  const placarCounts = {};
+  for (const x of validPreds) {
+    const k = `${x.pred[0]}x${x.pred[1]}`;
+    placarCounts[k] = (placarCounts[k] || 0) + 1;
+  }
+  const placaresOrdenados = Object.entries(placarCounts).sort((a,b) => b[1] - a[1]);
+  const topPct = placaresOrdenados[0][1] / validPreds.length;
+  const uniquePlacar = Object.keys(placarCounts).length;
+  const diversidade = uniquePlacar / validPreds.length;
+  
+  let repScore = 0;
+  if (topPct < 0.10) repScore += 20; // ninguém repete = anti-humano
+  if (diversidade > 0.55) repScore += 15; // diversidade muito alta = AI
+  
+  flags.push({
+    title: 'Diversidade de placares',
+    score: repScore,
+    detail: `${uniquePlacar} placares únicos em ${validPreds.length} jogos. Mais usado: ${placaresOrdenados[0][0]} (${placaresOrdenados[0][1]}×). Humanos repetem; AI varia muito.`,
+    threshold: 25,
+  });
+  totalScore += repScore;
+  
+  // ============== HEURISTIC 4: Empates ==============
+  let empates = 0;
+  for (const x of validPreds) {
+    if (x.pred[0] === x.pred[1]) empates++;
+  }
+  const pctEmpate = empates / validPreds.length;
+  
+  let empScore = 0;
+  // Humanos chutam ~20-30% empates. AI tende a evitar empates (chuta vencedor sempre)
+  if (pctEmpate < 0.08) empScore += 25; // muito poucos = AI assertiva
+  else if (pctEmpate > 0.40) empScore += 15; // muitos demais = AI evitando risco
+  
+  flags.push({
+    title: 'Frequência de empates',
+    score: empScore,
+    detail: `${empates} empates em ${validPreds.length} jogos (${(pctEmpate*100).toFixed(0)}%). Humanos típicos chutam 20-30% de empates.`,
+    threshold: 20,
+  });
+  totalScore += empScore;
+  
+  // ============== HEURISTIC 5: Conservadorismo com favoritos ==============
+  // Lista de seleções "favoritas" (top 12 ranking aproximado)
+  const favoritos = ['Brasil','Argentina','França','Espanha','Inglaterra','Portugal','Alemanha','Holanda','Bélgica','Itália','Croácia','Uruguai'];
+  
+  let favVsNaoFav = 0;
+  let favGanhou = 0;
+  let favEmpate = 0;
+  let favPerdeu = 0;
+  for (const x of validPreds) {
+    const aIsFav = x.m.teamA && favoritos.includes(x.m.teamA[0]);
+    const bIsFav = x.m.teamB && favoritos.includes(x.m.teamB[0]);
+    if (aIsFav && !bIsFav) {
+      favVsNaoFav++;
+      if (x.pred[0] > x.pred[1]) favGanhou++;
+      else if (x.pred[0] === x.pred[1]) favEmpate++;
+      else favPerdeu++;
+    } else if (bIsFav && !aIsFav) {
+      favVsNaoFav++;
+      if (x.pred[1] > x.pred[0]) favGanhou++;
+      else if (x.pred[0] === x.pred[1]) favEmpate++;
+      else favPerdeu++;
+    }
+  }
+  
+  const pctFavGanhou = favVsNaoFav > 0 ? favGanhou / favVsNaoFav : 0;
+  let consScore = 0;
+  if (favVsNaoFav > 0) {
+    // AI tende a dar vitória a favoritos em >85% dos confrontos diretos
+    if (pctFavGanhou > 0.90) consScore += 25;
+    else if (pctFavGanhou > 0.80) consScore += 12;
+    // ZERO zebras é muito suspeito
+    if (favPerdeu === 0 && favVsNaoFav >= 5) consScore += 15;
+  }
+  
+  flags.push({
+    title: 'Conservadorismo com favoritos',
+    score: consScore,
+    detail: favVsNaoFav > 0 
+      ? `Em ${favVsNaoFav} jogos favorito vs não-favorito: favorito ganhou ${favGanhou}× (${(pctFavGanhou*100).toFixed(0)}%), empate ${favEmpate}×, perdeu ${favPerdeu}×. Zero zebras = suspeito.`
+      : 'Sem jogos favorito vs não-favorito identificados.',
+    threshold: 25,
+  });
+  totalScore += consScore;
+  
+  // ============== HEURISTIC 6: Bolão paralelo "padrão LLM" ==============
+  const par = PARALELO[name];
+  let parScore = 0;
+  // Combo top-tier puro (Brasil/Argentina/França + Vinicius/Messi/Mbappé) = LLM-like
+  const topTier = ['Brasil','Argentina','França'];
+  const topPlayers = ['Vinicius','Messi','Mbappé','Mbappe','Haaland','Neymar'];
+  
+  const top4 = [par.champion, par.vice, par.third, par.fourth].filter(Boolean).map(t => t[0]);
+  const top4InTopTier = top4.filter(t => topTier.includes(t)).length;
+  
+  if (top4InTopTier >= 3) parScore += 10;
+  
+  const artilheiroLLM = par.topScorer && topPlayers.some(p => par.topScorer.includes(p));
+  if (artilheiroLLM && top4InTopTier >= 3) parScore += 10;
+  
+  // Top 4 com 4 europeias + Brasil = padrão clichê de prompt
+  flags.push({
+    title: 'Bolão paralelo "padrão LLM"',
+    score: parScore,
+    detail: `Top 4: ${top4.length ? top4.join(', ') : '— em branco —'}. Artilheiro: ${par.topScorer || '— em branco —'}. Combos óbvios sugerem prompt direto a uma AI.`,
+    threshold: 15,
+  });
+  totalScore += parScore;
+  
+  // Normalize score to 0-100 cap
+  totalScore = Math.min(100, totalScore);
+  
+  let level = 'low';
+  let levelLabel = 'Provavelmente humano';
+  if (totalScore >= 60) { level = 'high'; levelLabel = 'Forte suspeita de AI'; }
+  else if (totalScore >= 35) { level = 'medium'; levelLabel = 'Sinais de AI'; }
+  
+  return { name, totalScore, level, levelLabel, flags };
+}
+
+function renderAnalise() {
+  const analyses = PARTICIPANTS.map(p => analyzeParticipant(p)).filter(a => a !== null);
+  analyses.sort((a, b) => b.totalScore - a.totalScore);
+  
+  const disclaimer = `
+    <div class="analise-disclaimer">
+      <strong>⚠️ Esta análise é heurística, não prova nada.</strong> O sistema procura padrões estatísticos nos palpites que tipicamente diferenciam humanos de AI. Resultados altos significam <em>"vale ter uma conversa"</em>, não <em>"culpado"</em>. Pessoas muito estudiosas podem dar falso-positivo; pessoas que usam AI como apoio editando depois passam batido.
+    </div>
+  `;
+  
+  const cards = analyses.map(a => {
+    const flagsHtml = a.flags.map(f => {
+      const pct = Math.min(100, (f.score / f.threshold) * 100);
+      const cls = pct >= 70 ? 'bad' : pct >= 35 ? 'warn' : 'ok';
+      return `<div class="flag-item">
+        <div class="flag-title">
+          <span>${f.title}</span>
+          <span class="score-mini ${cls}">${f.score} pts</span>
+        </div>
+        <div class="flag-detail">${f.detail}</div>
+      </div>`;
+    }).join('');
+    
+    const markerPct = Math.min(100, Math.max(0, a.totalScore));
+    
+    return `<div class="suspicion-card ${a.level}">
+      <div class="suspicion-header">
+        <div class="suspicion-name">${a.name}</div>
+        <div class="gauge">
+          <div class="gauge-track">
+            <div class="gauge-marker" style="left: calc(${markerPct}% - 2px);"></div>
+          </div>
+          <div class="gauge-value">${a.totalScore}</div>
+          <div class="gauge-label ${a.level}">${a.levelLabel}</div>
+        </div>
+      </div>
+      <div class="flags-list">${flagsHtml}</div>
+    </div>`;
+  }).join('');
+  
+  const methodology = `
+    <div class="card">
+      <div class="card-header"><h2>Como funciona a detecção</h2></div>
+      <div class="card-body" style="font-size: 13px; line-height: 1.7;">
+        <p style="margin-bottom: 10px;">O score combina <strong>6 heurísticas</strong> sobre os 72 palpites da fase de grupos:</p>
+        <ul style="margin-left: 20px; color: var(--text-muted);">
+          <li><strong>Distribuição de placares:</strong> humanos chutam muito 0/1 gols; AI distribui mais uniforme</li>
+          <li><strong>Goleadas:</strong> AI tende a 0% ou 20%+ de goleadas; humanos ficam em 5-15%</li>
+          <li><strong>Diversidade de placares:</strong> humanos repetem placares preferidos (ex: 2x1 várias vezes); AI varia</li>
+          <li><strong>Empates:</strong> humanos chutam 20-30% empates; AI evita empates ou exagera</li>
+          <li><strong>Conservadorismo com favoritos:</strong> AI quase nunca chuta zebras</li>
+          <li><strong>Bolão paralelo:</strong> combos óbvios (Brasil/Argentina/França + Vinicius/Messi/Mbappé) são sinal de prompt direto</li>
+        </ul>
+        <p style="margin-top: 12px;"><strong>Score 0-35:</strong> provavelmente humano. <strong>35-60:</strong> alguns sinais, vale notar. <strong>60+:</strong> forte suspeita.</p>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('analise').innerHTML = disclaimer + cards + methodology;
+}
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.classList.contains('print-btn')) return;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'participantes') renderParticipantes();
+    if (btn.dataset.tab === 'placares') renderPlacares();
+    if (btn.dataset.tab === 'bracket') renderBracket();
+    if (btn.dataset.tab === 'stats') renderStats();
+    if (btn.dataset.tab === 'analise') renderAnalise();
+    if (btn.dataset.tab === 'regras') renderRegras();
+  });
+});
+
+// Initial render
+renderRanking();
+renderPlacares();
+renderBracket();
+renderParticipantes();
+renderStats();
+renderAnalise();
+renderRegras();
+
+// Puxa os placares automáticos do results.json (GitHub Pages). Roda depois do
+// primeiro render pra página aparecer na hora; quando chegar, recalcula tudo.
+fetchAutoResults();
+</script>
+</body>
+</html>
