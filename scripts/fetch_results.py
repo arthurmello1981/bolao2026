@@ -110,7 +110,8 @@ OVERRIDES = {
 
 def norm(s):
     s = unicodedata.normalize('NFD', s or '').encode('ascii', 'ignore').decode().lower()
-    return ' '.join(s.replace("'", ' ').split())
+    s = s.replace('&', ' and ').replace("'", ' ')
+    return ' '.join(s.split())
 
 
 def canonical(name):
