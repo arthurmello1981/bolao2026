@@ -2,7 +2,7 @@ name: Atualizar placares
 
 on:
   schedule:
-    - cron: '0 * * * *'      # de hora em hora (UTC)
+    - cron: '8,38 * * * *'    # 2x/hora, fora do :00 (que o GitHub dropa)
   workflow_dispatch:          # botão "Run workflow" pra rodar na hora
 
 permissions:
