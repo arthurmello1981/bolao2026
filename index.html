@@ -704,6 +704,11 @@ table.games tr.exact-score td.points { color: var(--green); }
 .score-input::-webkit-outer-spin-button,
 .score-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .score-input-x { color: var(--text-muted); font-weight: 700; margin: 0 4px; }
+.adv-pick { margin-top: 6px; display: flex; align-items: center; gap: 4px; justify-content: center; }
+.adv-lbl { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+.adv-btn { border: 1px solid var(--border); background: white; border-radius: 6px; padding: 2px 9px; font-size: 11px; font-weight: 700; cursor: pointer; color: var(--navy); font-family: inherit; }
+.adv-btn:hover { border-color: var(--navy-light); }
+.adv-btn.adv-on { background: var(--navy); color: white; border-color: var(--navy); }
 
 /* Action bar buttons */
 .action-bar {
@@ -761,7 +766,7 @@ table.games tr.exact-score td.points { color: var(--green); }
       <div class="stat"><strong>3</strong> AIs competindo</div>
       <div class="stat"><strong>104</strong> jogos</div>
       <div class="stat"><strong>12</strong> grupos</div>
-      <div class="stat"><strong>1.530</strong> pontos máx</div>
+      <div class="stat"><strong>1.850</strong> pontos máx</div>
     </div>
   </div>
 </header>
@@ -1324,7 +1329,8 @@ function generatePredictions() {
     if (MANUAL_PREDICTIONS[name]) {
       const manual = MANUAL_PREDICTIONS[name];
       for (const m of MATCHES) {
-        if (m.phase === 'Grupos' && manual[m.num]) {
+        if (manual[m.num]) {
+          // grupos: [golsA, golsB] · mata-mata: [golsA, golsB, 'A'|'B'] (quem avança no empate)
           out[name][m.num] = manual[m.num];
         }
       }
@@ -1362,6 +1368,17 @@ function generateOfficial() {
 const STORAGE_KEY = 'bolao_copa_2026_official';
 // Preenchido em runtime pelo fetch de results.json (gerado pela GitHub Action a partir do openfootball).
 let AUTO_RESULTS = {};
+
+// Valida e normaliza uma entrada de resultado.
+// Grupos: [golsA, golsB]. Mata-mata: [golsA, golsB, 'A'|'B'] (3º = quem avança / vence o pênalti).
+function sanitizeResult(v) {
+  if (!Array.isArray(v) || v.length < 2) return null;
+  const a = v[0], b = v[1];
+  if (!Number.isInteger(a) || !Number.isInteger(b)) return null;
+  if (a < 0 || a > 20 || b < 0 || b > 20) return null;
+  if (v.length >= 3 && (v[2] === 'A' || v[2] === 'B')) return [a, b, v[2]];
+  return [a, b];
+}
 function loadOfficial() {
   const seed = (typeof window !== 'undefined' && window.__OFFICIAL_SEED__) ? window.__OFFICIAL_SEED__ : {};
   let stored = {};
@@ -1381,12 +1398,8 @@ async function fetchAutoResults() {
     const data = await resp.json();
     const clean = {};
     for (const k of Object.keys(data)) {
-      const v = data[k];
-      if (Array.isArray(v) && v.length === 2 &&
-          Number.isInteger(v[0]) && Number.isInteger(v[1]) &&
-          v[0] >= 0 && v[0] <= 20 && v[1] >= 0 && v[1] <= 20) {
-        clean[k] = [v[0], v[1]];
-      }
+      const c = sanitizeResult(data[k]);
+      if (c) clean[k] = c;
     }
     AUTO_RESULTS = clean;
     OFFICIAL = loadOfficial();
@@ -1413,11 +1426,31 @@ function handleScoreInput(num) {
   } else {
     const a = Math.max(0, Math.min(20, parseInt(aRaw, 10) || 0));
     const b = Math.max(0, Math.min(20, parseInt(bRaw, 10) || 0));
-    OFFICIAL[num] = [a, b];
+    const prev = OFFICIAL[num];
+    // Empate mantém o vencedor do pênalti já marcado; placar decisivo descarta (avança quem fez mais gol).
+    if (a === b && Array.isArray(prev) && prev.length >= 3 && (prev[2] === 'A' || prev[2] === 'B')) {
+      OFFICIAL[num] = [a, b, prev[2]];
+    } else {
+      OFFICIAL[num] = [a, b];
+    }
     aEl.value = a; bEl.value = b;
     aEl.classList.add('filled'); bEl.classList.add('filled');
   }
   saveOfficial();
+  rerenderBackground();
+}
+
+// Marca quem avança num jogo de mata-mata empatado nos 120 min (vencedor do pênalti).
+function setAdvancer(num, side) {
+  const off = OFFICIAL[num];
+  if (!off) { alert('Preencha o placar de 120 min primeiro.'); return; }
+  if (off[0] !== off[1]) {
+    alert('Esse jogo não terminou empatado — quem avança é definido pelo placar.');
+    return;
+  }
+  OFFICIAL[num] = [off[0], off[1], side];
+  saveOfficial();
+  renderPlacares();
   rerenderBackground();
 }
 
@@ -1451,12 +1484,8 @@ function importResultsJSON(ev) {
       const clean = {};
       let bad = 0;
       for (const k of Object.keys(data)) {
-        const v = data[k];
-        if (Array.isArray(v) && v.length === 2 &&
-            Number.isInteger(v[0]) && Number.isInteger(v[1]) &&
-            v[0] >= 0 && v[0] <= 20 && v[1] >= 0 && v[1] <= 20) {
-          clean[k] = [v[0], v[1]];
-        } else { bad++; }
+        const c = sanitizeResult(data[k]);
+        if (c) clean[k] = c; else bad++;
       }
       OFFICIAL = Object.assign({}, OFFICIAL, clean);
       saveOfficial();
@@ -1504,7 +1533,7 @@ function exportFrozenHTML() {
   URL.revokeObjectURL(url);
 }
 
-// Scoring function
+// Scoring function — pontos de placar (no mata-mata, sobre o placar de 120 min).
 function calculatePoints(pred, official, multiplier) {
   if (!pred || !official) return null;
   const [pA, pB] = pred;
@@ -1519,11 +1548,30 @@ function calculatePoints(pred, official, multiplier) {
   return 0;
 }
 
+// Quem avança, a partir de uma entrada [a,b] ou [a,b,'A'|'B'].
+// Placar decisivo => quem fez mais gols. Empate => precisa do 3º elemento (pênalti).
+function advancerOf(entry) {
+  if (!entry) return null;
+  const a = entry[0], b = entry[1];
+  if (a > b) return 'A';
+  if (b > a) return 'B';
+  return (entry.length >= 3 && (entry[2] === 'A' || entry[2] === 'B')) ? entry[2] : null;
+}
+
+// Bônus do mata-mata: +10 FIXO por acertar quem avança (independe do placar e do multiplicador).
+// Vale nos 32 jogos do mata-mata (3º lugar e final inclusos: "avança" = vence o jogo).
+function advanceBonus(pred, official, isKnockout) {
+  if (!isKnockout || !pred || !official) return 0;
+  const pa = advancerOf(pred), oa = advancerOf(official);
+  return (pa && oa && pa === oa) ? 10 : 0;
+}
+
 function totalPoints(participant) {
   let total = 0;
   let byPhase = {};
   let exactCount = 0;
   let winnerCount = 0;
+  let bonusTotal = 0;
   for (const m of MATCHES) {
     const pred = PREDICTIONS[participant]?.[m.num];
     const off = OFFICIAL[m.num];
@@ -1534,8 +1582,14 @@ function totalPoints(participant) {
       if (p === 10 * m.mult) exactCount++;
       else if (p > 0) winnerCount++;
     }
+    const bonus = advanceBonus(pred, off, m.phase !== 'Grupos');
+    if (bonus) {
+      total += bonus;
+      byPhase[m.phase] = (byPhase[m.phase] || 0) + bonus;
+      bonusTotal += bonus;
+    }
   }
-  return { total, byPhase, exactCount, winnerCount };
+  return { total, byPhase, exactCount, winnerCount, bonusTotal };
 }
 
 // ============================================================
@@ -1710,11 +1764,18 @@ function renderPlacares() {
     const bVal = off ? off[1] : '';
     const fillCls = off ? ' filled' : '';
     const scoreCell = `<input class="score-input${fillCls}" type="number" inputmode="numeric" min="0" max="20" id="sa-${m.num}" value="${aVal}" onchange="handleScoreInput(${m.num})"><span class="score-input-x">x</span><input class="score-input${fillCls}" type="number" inputmode="numeric" min="0" max="20" id="sb-${m.num}" value="${bVal}" onchange="handleScoreInput(${m.num})">`;
+    let advCell = '';
+    if (m.phase !== 'Grupos') {
+      const adv = off ? advancerOf(off) : null;
+      const aSel = adv === 'A' ? ' adv-on' : '';
+      const bSel = adv === 'B' ? ' adv-on' : '';
+      advCell = `<div class="adv-pick"><span class="adv-lbl">avança:</span><button type="button" class="adv-btn${aSel}" onclick="setAdvancer(${m.num},'A')">A</button><button type="button" class="adv-btn${bSel}" onclick="setAdvancer(${m.num},'B')">B</button></div>`;
+    }
     html += `<tr>
       <td class="num">${m.num}</td>
       <td class="phase">${phasePill(m.phase)}</td>
       <td class="team-a">${teamCell(m.teamA, 'a')}</td>
-      <td class="score" style="white-space:nowrap;">${scoreCell}</td>
+      <td class="score" style="white-space:nowrap;">${scoreCell}${advCell}</td>
       <td class="team-b">${teamCell(m.teamB, 'b')}</td>
     </tr>`;
   }
@@ -1907,9 +1968,24 @@ function renderRegras() {
             <tr><td>3º Lugar</td><td class="right">3x</td><td class="right">30</td><td class="right">1</td><td class="right">30</td></tr>
             <tr><td><strong>FINAL</strong></td><td class="right">5x</td><td class="right">50</td><td class="right">1</td><td class="right">50</td></tr>
             <tr><td>Bolão paralelo</td><td class="right">—</td><td class="right">—</td><td class="right">—</td><td class="right">50</td></tr>
-            <tr class="total"><td>TOTAL MÁXIMO</td><td class="right">—</td><td class="right">—</td><td class="right">104</td><td class="right">1.530</td></tr>
+            <tr><td>Bônus "quem avança" (mata-mata)</td><td class="right">+10 fixo</td><td class="right">10</td><td class="right">32</td><td class="right">320</td></tr>
+            <tr class="total"><td>TOTAL MÁXIMO</td><td class="right">—</td><td class="right">—</td><td class="right">104</td><td class="right">1.850</td></tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h2>Mata-mata: placar de 120 min + bônus de avanço</h2></div>
+      <div class="card-body" style="font-size:14px; line-height:1.7;">
+        <p style="margin-bottom:10px;">No mata-mata, o placar que conta é o de <strong>120 minutos</strong> (tempo normal + prorrogação). Os pênaltis <strong>não entram</strong> no placar — servem só pra definir quem avança.</p>
+        <p style="margin-bottom:10px;">Os pontos de placar seguem a mesma tabela acima, com o multiplicador da fase. Além disso, tem um <strong>bônus fixo de 10 pontos</strong> por acertar <strong>quem avança</strong>:</p>
+        <ul style="margin-left:20px; margin-bottom:10px; color:var(--text-muted);">
+          <li>vencendo nos 120 min (você cravou o time que passou), ou</li>
+          <li>empatando e acertando quem leva nos pênaltis.</li>
+        </ul>
+        <p style="margin-bottom:10px;">Vale pros <strong>32 jogos</strong> do mata-mata — no 3º lugar e na final, "avança" quer dizer simplesmente vencer o jogo.</p>
+        <p>O bônus é <strong>independente do placar</strong>: se você acertou quem passa mas errou o placar, ainda leva os 10. São 32 × 10 = <strong>320 pontos</strong> a mais no teto (por isso o máximo subiu de 1.530 para 1.850).</p>
       </div>
     </div>
 
@@ -1957,8 +2033,10 @@ function renderBracket() {
     const off = OFFICIAL[m.num];
     const aScore = off ? off[0] : null;
     const bScore = off ? off[1] : null;
-    const aWinner = off && aScore > bScore;
-    const bWinner = off && bScore > aScore;
+    const adv = off ? advancerOf(off) : null;                 // quem avança (placar ou pênalti)
+    const wentToPens = !!(off && aScore === bScore && adv);   // empate decidido nos pênaltis
+    const aWinner = adv === 'A';
+    const bWinner = adv === 'B';
     const teamA = m.teamA;
     const teamB = m.teamB;
     
@@ -1968,8 +2046,9 @@ function renderBracket() {
       }
       const [name, code] = team;
       const score = side === 'a' ? aScore : bScore;
+      const penTag = (wentToPens && isWinner) ? ` <span style="font-size:10px;color:var(--text-muted);font-weight:700;">(pên)</span>` : '';
       return `<div class="bracket-team ${isWinner ? 'winner' : ''}">
-        <span class="team-info">${flagSpan(code)}<span>${name}</span></span>
+        <span class="team-info">${flagSpan(code)}<span>${name}</span>${penTag}</span>
         <span class="score">${score !== null ? score : '-'}</span>
       </div>`;
     };
