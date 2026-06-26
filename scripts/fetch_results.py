@@ -7,10 +7,13 @@ sem chave de API) e grava results.json no formato do bolão: { "num_do_jogo": [g
   e orienta o placar conforme a ordem A/B oficial do bolão.
 - Nomes não reconhecidos são reportados no log (não quebram a execução) — basta
   adicionar o apelido em ALIASES e rodar de novo.
-- Pênaltis: usa só o placar do tempo normal/prorrogação (campo "ft"), nunca o agregado.
+- Placar do MATA-MATA: usa o placar de 120 min (campo "et" se houve prorrogação,
+  senão "ft"). Pênaltis NÃO entram no placar — só definem quem avança (campo "p").
+  As entradas do mata-mata saem como [golsA, golsB, "A"|"B"] (3º = quem avança).
 
-Só fase de grupos por enquanto. Mata-mata depende dos classificados serem fixados
-no HTML primeiro (jogos 73-104).
+Grupos (1-72) funcionam sozinhos. Mata-mata (73-104) só é casado depois que você
+fixar os confrontos em KO_FIXTURES (e os mesmos times no MATCHES do HTML). Enquanto
+KO_FIXTURES estiver vazio, os jogos de mata-mata são ignorados — sem efeito.
 """
 import json
 import sys
@@ -38,6 +41,21 @@ GROUPS = {
 # Ordem dos confrontos dentro de cada grupo (índices dos times). Igual ao HTML:
 # jogo1: t1xt2, jogo2: t3xt4, jogo3: t1xt3, jogo4: t4xt2, jogo5: t4xt1, jogo6: t2xt3
 PAIRS = [(0, 1), (2, 3), (0, 2), (3, 1), (3, 0), (1, 2)]
+
+# Conjunto de nomes canônicos válidos do bolão (pra validar os fixtures do mata-mata).
+VALID_TEAMS = {t for teams in GROUPS.values() for t in teams}
+
+# ============================================================
+# CONFRONTOS DO MATA-MATA (você preenche a cada fase)
+# ============================================================
+# VAZIO até a fase de grupos acabar. Quando fixar o chaveamento no HTML (teamA/teamB
+# dos jogos 73-104), ESPELHE aqui o mesmo confronto, na MESMA ordem A/B:
+#   numero_do_jogo: ('Time A', 'Time B'),   # nomes canônicos do bolão (com acento)
+# Ex (R32): 73: ('Brasil', 'Suíça'),
+# Só inclua jogos cujos DOIS times já estão definidos. O robô só casa o que estiver aqui.
+KO_FIXTURES = {
+    # 73: ('Time A', 'Time B'),
+}
 
 # openfootball usa nomes em inglês. Aliases generosos cobrindo variantes comuns.
 # Chave = nome normalizado (sem acento, minúsculo). Valor = nome canônico do bolão.
@@ -99,9 +117,11 @@ ALIASES = {
 # ============================================================
 # Placares que VOCÊ define à mão e que VENCEM o openfootball pra todo mundo.
 # Use quando o openfootball estiver errado ou atrasado.
-# Formato: numero_do_jogo: [golsA, golsB]   (A e B na ordem oficial do bolão)
-# Ex: o jogo 17 (Haiti x Brasil) foi 2x1 mas o openfootball lançou errado:
-#     17: [2, 1],
+# Grupos:     numero_do_jogo: [golsA, golsB]
+# Mata-mata:  numero_do_jogo: [golsA, golsB, "A"|"B"]   (3º = quem avança; obrigatório no empate)
+# A e B na ordem oficial do bolão.
+# Ex: jogo 17 (Haiti x Brasil) foi 2x1 mas o openfootball lançou errado:  17: [2, 1],
+# Ex: jogo 89 (oitava) foi 1x1 e o time A passou nos pênaltis:           89: [1, 1, "A"],
 # Quando o openfootball arrumar a fonte, é só apagar a linha daqui.
 OVERRIDES = {
     # 17: [2, 1],
@@ -119,7 +139,8 @@ def canonical(name):
 
 
 def build_index():
-    """{ frozenset(timeA, timeB): (num, timeA_oficial, timeB_oficial) } para os 72 jogos."""
+    """{ frozenset(timeA, timeB): (num, timeA_oficial, timeB_oficial) } para grupos (1-72)
+    + os jogos de mata-mata já fixados em KO_FIXTURES."""
     idx = {}
     num = 1
     for teams in GROUPS.values():
@@ -127,19 +148,92 @@ def build_index():
             ta, tb = teams[a], teams[b]
             idx[frozenset((ta, tb))] = (num, ta, tb)
             num += 1
+    for gnum, pair in KO_FIXTURES.items():
+        ta, tb = pair
+        if ta not in VALID_TEAMS or tb not in VALID_TEAMS:
+            print(f'AVISO — KO_FIXTURES jogo {gnum}: nome não reconhecido em {pair} '
+                  f'(use o nome canônico do bolão, com acento)', file=sys.stderr)
+            continue
+        idx[frozenset((ta, tb))] = (int(gnum), ta, tb)
     return idx
 
 
 def extract_score(m):
-    """Placar do tempo normal/prorrogação em vários formatos do openfootball."""
+    """Placar de 120 min: prorrogação ('et') se houve, senão tempo normal ('ft').
+    Jogos de grupo nunca têm 'et', então caem no 'ft' normalmente."""
     sc = m.get('score')
     if isinstance(sc, dict):
-        ft = sc.get('ft')
-        if isinstance(ft, list) and len(ft) == 2 and all(x is not None for x in ft):
-            return int(ft[0]), int(ft[1])
+        for key in ('et', 'ft'):
+            v = sc.get(key)
+            if isinstance(v, list) and len(v) == 2 and all(x is not None for x in v):
+                return int(v[0]), int(v[1])
     if m.get('score1') is not None and m.get('score2') is not None:
         return int(m['score1']), int(m['score2'])
     return None
+
+
+def pen_winner(m):
+    """Vencedor da disputa de pênaltis: 0 = time1 (openfootball), 1 = time2.
+    None se não houve pênalti (campo 'p' ausente)."""
+    sc = m.get('score')
+    if isinstance(sc, dict):
+        p = sc.get('p')
+        if isinstance(p, list) and len(p) == 2 and all(x is not None for x in p):
+            if int(p[0]) > int(p[1]):
+                return 0
+            if int(p[1]) > int(p[0]):
+                return 1
+    return None
+
+
+def build_results(matches, idx):
+    """Constrói {num: [a,b]} (grupos) / {num: [a,b,'A'|'B']} (mata-mata) a partir
+    da lista de jogos do openfootball e do índice de confrontos. Retorna (results, unmatched)."""
+    results = {}
+    unmatched = []
+    for m in matches:
+        score = extract_score(m)
+        if score is None:  # ainda não jogou
+            continue
+        is_group = bool(m.get('group'))
+        ca, cb = canonical(m.get('team1', '')), canonical(m.get('team2', ''))
+        if is_group:
+            if not ca:
+                unmatched.append(m.get('team1'))
+                continue
+            if not cb:
+                unmatched.append(m.get('team2'))
+                continue
+        else:
+            # Mata-mata: antes de definir os times o openfootball usa placeholders
+            # ("Winner Group A" etc.) — esses não casam e são ignorados em silêncio.
+            if not ca or not cb:
+                continue
+        hit = idx.get(frozenset((ca, cb)))
+        if not hit:
+            continue  # par não mapeado (mata-mata ainda não fixado em KO_FIXTURES, ou jogo irrelevante)
+        num, ta, tb = hit
+        inverted = not (ca == ta and cb == tb)  # openfootball listou na ordem inversa
+        a_goals, b_goals = (score[1], score[0]) if inverted else (score[0], score[1])
+
+        if num <= 72:
+            results[str(num)] = [a_goals, b_goals]
+        else:
+            # Mata-mata: define quem avança.
+            if a_goals > b_goals:
+                adv = 'A'
+            elif b_goals > a_goals:
+                adv = 'B'
+            else:
+                pw = pen_winner(m)  # 0=time1, 1=time2 na ordem do openfootball
+                if pw is None:
+                    adv = None  # empate sem pênalti registrado ainda
+                else:
+                    pw_side = pw if not inverted else (1 - pw)  # reorienta pra A/B do bolão
+                    adv = 'A' if pw_side == 0 else 'B'
+            entry = [a_goals, b_goals] + ([adv] if adv else [])
+            results[str(num)] = entry
+    return results, unmatched
 
 
 def main():
@@ -147,30 +241,7 @@ def main():
     data = json.loads(urllib.request.urlopen(req, timeout=30).read())
 
     idx = build_index()
-    results = {}
-    unmatched = []
-
-    for m in data.get('matches', []):
-        if not m.get('group'):  # só fase de grupos
-            continue
-        score = extract_score(m)
-        if score is None:  # ainda não jogou
-            continue
-        ca, cb = canonical(m.get('team1', '')), canonical(m.get('team2', ''))
-        if not ca:
-            unmatched.append(m.get('team1'))
-            continue
-        if not cb:
-            unmatched.append(m.get('team2'))
-            continue
-        hit = idx.get(frozenset((ca, cb)))
-        if not hit:
-            continue
-        num, ta, tb = hit
-        if ca == ta and cb == tb:
-            results[str(num)] = [score[0], score[1]]
-        else:  # openfootball listou na ordem inversa — espelha o placar
-            results[str(num)] = [score[1], score[0]]
+    results, unmatched = build_results(data.get('matches', []), idx)
 
     if unmatched:
         print('AVISO — nomes não reconhecidos (adicione em ALIASES):',
@@ -178,8 +249,12 @@ def main():
 
     # Correções do admin vencem o openfootball.
     for num, score in OVERRIDES.items():
-        if (isinstance(score, list) and len(score) == 2
-                and all(isinstance(x, int) and 0 <= x <= 20 for x in score)):
+        ok = (isinstance(score, list) and len(score) in (2, 3)
+              and isinstance(score[0], int) and isinstance(score[1], int)
+              and 0 <= score[0] <= 20 and 0 <= score[1] <= 20)
+        if ok and len(score) == 3:
+            ok = score[2] in ('A', 'B')
+        if ok:
             results[str(num)] = list(score)
         else:
             print(f'AVISO — OVERRIDE inválido no jogo {num}: {score} (ignorado)',
