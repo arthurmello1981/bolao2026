@@ -1805,6 +1805,7 @@ function renderParticipantes() {
   }).join('');
 
   const data = totalPoints(currentParticipant);
+  const koPts = data.total - (data.byPhase['Grupos'] || 0);   // pontos do mata-mata (placar + bônus)
   const par = PARALELO[currentParticipant];
   const parVal = (t) => t ? `${flagSpan(t[1])} ${t[0]}` : '<span style="color:var(--text-muted);font-style:italic;">— em branco —</span>';
   const parTop = par.topScorer || '<span style="color:var(--text-muted);font-style:italic;">— em branco —</span>';
@@ -1830,6 +1831,14 @@ function renderParticipantes() {
           <div class="summary-item">
             <div class="label">Pontos Grupos</div>
             <div class="value">${data.byPhase['Grupos'] || 0}</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Pontos Mata-mata</div>
+            <div class="value">${koPts}</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Bônus de Avanço</div>
+            <div class="value">${data.bonusTotal}</div>
           </div>
         </div>
       </div>
@@ -1913,11 +1922,74 @@ function renderParticipantes() {
   }
   gamesHtml += '</tbody></table></div>';
 
+  // ----- Palpites do mata-mata: só mostra jogos com confronto já definido -----
+  const koMatches = MATCHES.filter(m => m.phase !== 'Grupos' && m.teamA && m.teamB);
+  let koHtml;
+  if (koMatches.length === 0) {
+    koHtml = `<div class="card">
+      <div class="card-header"><h2>Palpites — Mata-mata</h2></div>
+      <div class="card-body" style="color:var(--text-muted);font-size:14px;">
+        O mata-mata ainda não começou — os palpites aparecem aqui quando os confrontos forem definidos.
+      </div>
+    </div>`;
+  } else {
+    koHtml = `<div class="card">
+      <div class="card-header"><h2>Palpites — Mata-mata</h2>
+        <span style="font-size:11px;color:var(--text-muted);">${koPts} pts (placar + bônus) · bônus de avanço: ${data.bonusTotal}</span>
+      </div>
+      <table class="games">
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th class="phase">Fase</th>
+            <th style="text-align:right;">Seleção A</th>
+            <th class="center">Palpite</th>
+            <th class="center">Oficial</th>
+            <th>Seleção B</th>
+            <th style="text-align:right;">Pontos</th>
+          </tr>
+        </thead>
+        <tbody>`;
+    let koPhase = null;
+    for (const m of koMatches) {
+      if (m.subphase !== koPhase) {
+        koPhase = m.subphase;
+        koHtml += `<tr class="group-header"><td colspan="7">${m.subphase}</td></tr>`;
+      }
+      const pred = PREDICTIONS[currentParticipant][m.num];
+      const off = OFFICIAL[m.num];
+      const pts = calculatePoints(pred, off, m.mult);
+      const bonus = advanceBonus(pred, off, true);
+      const isExact = pts !== null && pts === 10 * m.mult;
+      const advName = (s) => s === 'A' ? (m.teamA ? m.teamA[0] : 'A') : s === 'B' ? (m.teamB ? m.teamB[0] : 'B') : '';
+      const advFlag = (s) => s === 'A' ? (m.teamA ? flagSpan(m.teamA[1]) : '') : s === 'B' ? (m.teamB ? flagSpan(m.teamB[1]) : '') : '';
+      const pAdv = advancerOf(pred), oAdv = advancerOf(off);
+      const predScore = pred ? `${pred[0]} <span style="color:var(--text-muted);">x</span> ${pred[1]}` : '—';
+      const predAdvLine = (pred && pAdv) ? `<div style="font-size:10px;color:var(--text-muted);margin-top:3px;white-space:nowrap;">→ ${advFlag(pAdv)} ${advName(pAdv)}</div>` : '';
+      const offScore = off ? `<strong>${off[0]} <span style="color:var(--text-muted);font-weight:400;">x</span> ${off[1]}</strong>` : '<span style="color:var(--text-muted);font-style:italic;font-size:12px;">aguardando</span>';
+      const wentToPens = !!(off && off[0] === off[1] && oAdv);
+      const offAdvLine = (off && oAdv) ? `<div style="font-size:10px;color:var(--text-muted);margin-top:3px;white-space:nowrap;">→ ${advFlag(oAdv)} ${advName(oAdv)}${wentToPens ? ' (pên)' : ''}</div>` : '';
+      const bonusBadge = bonus ? ` <span class="points-badge" style="background:var(--green);color:white;">+${bonus}</span>` : '';
+      const ptsCell = pts === null ? pointsBadge(null) : `${pointsBadge(pts, 10 * m.mult)}${bonusBadge}`;
+      koHtml += `<tr${isExact ? ' class="exact-score"' : ''}>
+        <td class="num">${m.num}</td>
+        <td class="phase">${phasePill(m.phase)}</td>
+        <td class="team-a">${teamCell(m.teamA, 'a')}</td>
+        <td class="score" style="font-size:14px;">${predScore}${predAdvLine}</td>
+        <td class="score" style="font-size:14px;">${offScore}${offAdvLine}</td>
+        <td class="team-b">${teamCell(m.teamB, 'b')}</td>
+        <td class="points">${ptsCell}</td>
+      </tr>`;
+    }
+    koHtml += '</tbody></table></div>';
+  }
+
   document.getElementById('participantes').innerHTML = `
     <div class="participant-tabs">${btns}</div>
     ${participantCard}
     ${paraleloHtml}
     ${gamesHtml}
+    ${koHtml}
   `;
 
   document.querySelectorAll('#participantes .participant-tabs button').forEach(btn => {
