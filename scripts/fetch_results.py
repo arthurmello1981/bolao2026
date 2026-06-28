@@ -54,7 +54,22 @@ VALID_TEAMS = {t for teams in GROUPS.values() for t in teams}
 # Ex (R32): 73: ('Brasil', 'Suíça'),
 # Só inclua jogos cujos DOIS times já estão definidos. O robô só casa o que estiver aqui.
 KO_FIXTURES = {
-    # 73: ('Time A', 'Time B'),
+    73: ('África do Sul', 'Canadá'),
+    74: ('Alemanha', 'Paraguai'),
+    75: ('Holanda', 'Marrocos'),
+    76: ('Brasil', 'Japão'),
+    77: ('França', 'Suécia'),
+    78: ('Costa do Marfim', 'Noruega'),
+    79: ('México', 'Equador'),
+    80: ('Inglaterra', 'RD Congo'),
+    81: ('Estados Unidos', 'Bósnia'),
+    82: ('Bélgica', 'Senegal'),
+    83: ('Portugal', 'Croácia'),
+    84: ('Espanha', 'Áustria'),
+    85: ('Suíça', 'Argélia'),
+    86: ('Argentina', 'Cabo Verde'),
+    87: ('Colômbia', 'Gana'),
+    88: ('Austrália', 'Egito'),
 }
 
 # openfootball usa nomes em inglês. Aliases generosos cobrindo variantes comuns.
