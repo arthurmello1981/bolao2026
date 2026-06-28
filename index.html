@@ -889,6 +889,42 @@ function generateMatches() {
 
 const MATCHES = generateMatches();
 
+// ============================================================
+// CONFRONTOS DO MATA-MATA (fixados a cada fase — espelha KO_FIXTURES do fetch_results.py)
+// ============================================================
+// Nomes canônicos do bolão; resolvidos pra [nome, bandeira] via GROUPS. Mesma ordem A/B do script.
+const KO_FIXTURES = {
+  73: ['África do Sul', 'Canadá'],
+  74: ['Alemanha', 'Paraguai'],
+  75: ['Holanda', 'Marrocos'],
+  76: ['Brasil', 'Japão'],
+  77: ['França', 'Suécia'],
+  78: ['Costa do Marfim', 'Noruega'],
+  79: ['México', 'Equador'],
+  80: ['Inglaterra', 'RD Congo'],
+  81: ['Estados Unidos', 'Bósnia'],
+  82: ['Bélgica', 'Senegal'],
+  83: ['Portugal', 'Croácia'],
+  84: ['Espanha', 'Áustria'],
+  85: ['Suíça', 'Argélia'],
+  86: ['Argentina', 'Cabo Verde'],
+  87: ['Colômbia', 'Gana'],
+  88: ['Austrália', 'Egito'],
+};
+(function applyKOFixtures() {
+  const lookup = {};
+  for (const teams of Object.values(GROUPS)) for (const t of teams) lookup[t[0]] = t;
+  for (const [num, pair] of Object.entries(KO_FIXTURES)) {
+    const m = MATCHES.find(x => x.num === Number(num));
+    if (!m) continue;
+    const A = lookup[pair[0]], B = lookup[pair[1]];
+    if (!A) console.warn('KO_FIXTURES: time desconhecido →', pair[0]);
+    if (!B) console.warn('KO_FIXTURES: time desconhecido →', pair[1]);
+    if (A) m.teamA = A;
+    if (B) m.teamB = B;
+  }
+})();
+
 // Seeded random (LCG) so predictions are reproducible per participant
 function seededRandom(seed) {
   let state = seed;
@@ -1001,6 +1037,11 @@ const MANUAL_PREDICTIONS = {
     70: [0,2], // Panamá x Croácia
     71: [0,3], // Panamá x Inglaterra
     72: [2,1], // Croácia x Gana
+    // R32 (16-avos) — gerados 28/06, ANTES dos jogos. Formato [a, b, 'A'|'B'] (quem avança).
+    73: [0,1,'B'], 74: [2,0,'A'], 75: [1,1,'B'], 76: [2,1,'A'],
+    77: [2,0,'A'], 78: [1,2,'B'], 79: [1,0,'A'], 80: [2,0,'A'],
+    81: [1,1,'A'], 82: [2,1,'A'], 83: [1,1,'A'], 84: [3,1,'A'],
+    85: [1,0,'A'], 86: [3,0,'A'], 87: [2,1,'A'], 88: [0,0,'B'],
   },
   // CHATGPT — Classic LLM pattern: heavily favors ranked teams, few draws, no upsets
   // Will trigger detection: low draws %, conservative with favorites, repeated 2x0
@@ -1017,6 +1058,11 @@ const MANUAL_PREDICTIONS = {
     55: [3,0], 56: [3,0], 57: [3,0], 58: [0,2], 59: [0,4], 60: [2,1],
     61: [3,0], 62: [3,0], 63: [2,1], 64: [3,1], 65: [0,3], 66: [0,3],
     67: [3,1], 68: [2,1], 69: [3,0], 70: [0,3], 71: [0,4], 72: [2,0],
+    // R32 — gerados 28/06, antes dos jogos. Padrão LLM: favorito sempre passa, sem empate.
+    73: [1,2,'B'], 74: [3,0,'A'], 75: [2,0,'A'], 76: [3,0,'A'],
+    77: [3,0,'A'], 78: [1,2,'B'], 79: [2,1,'A'], 80: [3,0,'A'],
+    81: [2,0,'A'], 82: [2,0,'A'], 83: [2,1,'A'], 84: [3,0,'A'],
+    85: [2,0,'A'], 86: [4,0,'A'], 87: [2,0,'A'], 88: [1,2,'B'],
   },
   // GROK — Edgy LLM: more upsets, but still LLM patterns (uniform distribution, weird scores)
   'Grok': {
@@ -1032,6 +1078,11 @@ const MANUAL_PREDICTIONS = {
     55: [3,2], 56: [3,1], 57: [4,2], 58: [1,3], 59: [1,4], 60: [3,3],
     61: [4,0], 62: [4,2], 63: [2,2], 64: [3,2], 65: [1,3], 66: [2,4],
     67: [2,3], 68: [3,2], 69: [4,1], 70: [1,3], 71: [1,5], 72: [3,2],
+    // R32 — gerados 28/06, antes dos jogos. Padrão LLM: zebras, placares altos e estranhos.
+    73: [2,3,'B'], 74: [3,2,'A'], 75: [2,3,'B'], 76: [4,2,'A'],
+    77: [3,1,'A'], 78: [3,3,'A'], 79: [2,2,'B'], 80: [4,1,'A'],
+    81: [1,3,'B'], 82: [2,4,'B'], 83: [3,3,'B'], 84: [4,2,'A'],
+    85: [2,3,'B'], 86: [5,1,'A'], 87: [3,2,'A'], 88: [3,3,'A'],
   },
   // MARTIN MAIA MELLO — palpites enviados em 05/06/2026
   'Martin M.': {
@@ -1627,7 +1678,12 @@ function pointsBadge(pts, max=10) {
 // ----- Ranking tab -----
 function renderRanking() {
   const standings = PARTICIPANTS.map(name => ({ name, ...totalPoints(name) }))
-    .sort((a, b) => b.total - a.total || b.exactCount - a.exactCount);
+    .sort((a, b) =>
+      b.total - a.total
+      || b.exactCount - a.exactCount                              // 1) placares exatos
+      || b.winnerCount - a.winnerCount                            // 2) acertos de vencedor
+      || (b.byPhase['Grupos'] || 0) - (a.byPhase['Grupos'] || 0)  // 3) pontos na fase de grupos
+    );                                                            // 4) sorteio: empate real fica na ordem de entrada
 
   const podium = `
     <div class="podium">
