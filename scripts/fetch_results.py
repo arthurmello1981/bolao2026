@@ -70,6 +70,15 @@ KO_FIXTURES = {
     86: ('Argentina', 'Cabo Verde'),
     87: ('Colômbia', 'Gana'),
     88: ('Austrália', 'Egito'),
+    # --- OITAVAS (R16) — adicionado 04/07, espelha o HTML ---
+    89: ('Paraguai', 'França'),
+    90: ('Canadá', 'Marrocos'),
+    91: ('Portugal', 'Espanha'),
+    92: ('Estados Unidos', 'Bélgica'),
+    93: ('Brasil', 'Noruega'),
+    94: ('México', 'Inglaterra'),
+    95: ('Argentina', 'Egito'),
+    96: ('Suíça', 'Colômbia'),
 }
 
 # openfootball usa nomes em inglês. Aliases generosos cobrindo variantes comuns.
