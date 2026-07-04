@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Bolão Copa 2026 — build v94 — palpites das oitavas das 3 IAs (Claude/ChatGPT/Grok) inseridos 04/07/2026 · v93: oitavas liberadas, jogo 87 via results.json -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -910,6 +911,15 @@ const KO_FIXTURES = {
   86: ['Argentina', 'Cabo Verde'],
   87: ['Colômbia', 'Gana'],
   88: ['Austrália', 'Egito'],
+  // OITAVAS (R16) — chaveamento oficial FIFA 2026 (confrontos cruzam, não são adjacentes). Liberado 04/07/2026.
+  89: ['Paraguai', 'França'],        // vencedor 74 x vencedor 77
+  90: ['Canadá', 'Marrocos'],        // vencedor 73 x vencedor 75
+  91: ['Portugal', 'Espanha'],       // vencedor 83 x vencedor 84
+  92: ['Estados Unidos', 'Bélgica'], // vencedor 81 x vencedor 82
+  93: ['Brasil', 'Noruega'],         // vencedor 76 x vencedor 78
+  94: ['México', 'Inglaterra'],      // vencedor 79 x vencedor 80
+  95: ['Argentina', 'Egito'],        // vencedor 86 x vencedor 88
+  96: ['Suíça', 'Colômbia'],         // vencedor 85 x vencedor 87
 };
 (function applyKOFixtures() {
   const lookup = {};
@@ -1042,6 +1052,15 @@ const MANUAL_PREDICTIONS = {
     77: [2,0,'A'], 78: [1,2,'B'], 79: [1,0,'A'], 80: [2,0,'A'],
     81: [1,1,'A'], 82: [2,1,'A'], 83: [1,1,'A'], 84: [3,1,'A'],
     85: [1,0,'A'], 86: [3,0,'A'], 87: [2,1,'A'], 88: [0,0,'B'],
+    // OITAVAS (R16) — gerados 04/07 antes dos jogos. Estimativa por força relativa, placares realistas.
+    89: [0,2,'B'], // Paraguai x França — França bem superior
+    90: [1,1,'B'], // Canadá x Marrocos — parelho, Marrocos nos pênaltis
+    91: [1,2,'B'], // Portugal x Espanha — Espanha no detalhe
+    92: [0,1,'B'], // EUA x Bélgica — sem Balogun (suspenso), qualidade belga decide
+    93: [3,1,'A'], // Brasil x Noruega — Brasil resolve, Haaland desconta
+    94: [1,2,'B'], // México x Inglaterra — Inglaterra supera o fator Azteca
+    95: [2,0,'A'], // Argentina x Egito — Argentina controla o Salah
+    96: [1,2,'B'], // Suíça x Colômbia — Colômbia mais ofensiva
   },
   // CHATGPT — Classic LLM pattern: heavily favors ranked teams, few draws, no upsets
   // Will trigger detection: low draws %, conservative with favorites, repeated 2x0
@@ -1063,6 +1082,15 @@ const MANUAL_PREDICTIONS = {
     77: [3,0,'A'], 78: [1,2,'B'], 79: [2,1,'A'], 80: [3,0,'A'],
     81: [2,0,'A'], 82: [2,0,'A'], 83: [2,1,'A'], 84: [3,0,'A'],
     85: [2,0,'A'], 86: [4,0,'A'], 87: [2,0,'A'], 88: [1,2,'B'],
+    // OITAVAS (R16) — gerados 04/07 antes dos jogos. Padrão LLM: favorito sempre passa, placares repetidos, zero zebra.
+    89: [0,3,'B'], // França
+    90: [0,2,'B'], // Marrocos
+    91: [0,2,'B'], // Espanha
+    92: [0,2,'B'], // Bélgica
+    93: [3,0,'A'], // Brasil
+    94: [0,2,'B'], // Inglaterra
+    95: [3,0,'A'], // Argentina
+    96: [0,2,'B'], // Colômbia
   },
   // GROK — Edgy LLM: more upsets, but still LLM patterns (uniform distribution, weird scores)
   'Grok': {
@@ -1083,6 +1111,15 @@ const MANUAL_PREDICTIONS = {
     77: [3,1,'A'], 78: [3,3,'A'], 79: [2,2,'B'], 80: [4,1,'A'],
     81: [1,3,'B'], 82: [2,4,'B'], 83: [3,3,'B'], 84: [4,2,'A'],
     85: [2,3,'B'], 86: [5,1,'A'], 87: [3,2,'A'], 88: [3,3,'A'],
+    // OITAVAS (R16) — gerados 04/07 antes dos jogos. Padrão LLM edgy: zebras, placares altos e estranhos.
+    89: [3,2,'A'], // Paraguai derruba a França
+    90: [2,4,'B'], // Marrocos goleada
+    91: [4,2,'A'], // Portugal atropela a Espanha (zebra)
+    92: [4,3,'A'], // EUA em jogo maluco
+    93: [2,3,'B'], // Haaland elimina o Brasil (zebra)
+    94: [3,2,'A'], // México surpreende
+    95: [2,3,'B'], // Salah tira a Argentina (zebra)
+    96: [3,3,'B'], // empate, Colômbia nos pênaltis
   },
   // MARTIN MAIA MELLO — palpites enviados em 05/06/2026
   'Martin M.': {
