@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<!-- Bolão Copa 2026 — build v108 — jogo 90 do Pedro T cancelado (envio pós-apito) · — palpites das oitavas dos participantes (nilton, Pati C., Felipão, Arthur, Ali, Martin M., Tito M, pablo, Samuca, Iara e Violeta, wisnikão do grau) transcritos 04/07/2026 -->
+<!-- Bolão Copa 2026 — build v117 — QUARTAS COMPLETAS: +Renata Megale (arquivo dizia Pedro Teixeira; placar manda no 98/100), +Nati (print), +JTC (arquivo sem nome). 23/23 participantes humanos com palpite. Gabi sem o jogo 97. -->
+<!-- v108 — jogo 90 do Pedro T cancelado (envio pós-apito) · palpites das oitavas dos participantes transcritos 04/07/2026 -->
 
 <!-- Bolão Copa 2026 — build v94 — palpites das oitavas das 3 IAs (Claude/ChatGPT/Grok) inseridos 04/07/2026 · v93: oitavas liberadas, jogo 87 via results.json -->
 <html lang="pt-BR">
@@ -922,6 +923,11 @@ const KO_FIXTURES = {
   94: ['México', 'Inglaterra'],      // vencedor 79 x vencedor 80
   95: ['Argentina', 'Egito'],        // vencedor 86 x vencedor 88
   96: ['Suíça', 'Colômbia'],         // vencedor 85 x vencedor 87
+  // QUARTAS — chaveamento oficial FIFA 2026. Liberado 08/07/2026 (oitavas encerradas 07/07).
+  97: ['França', 'Marrocos'],        // vencedor 89 x vencedor 90
+  98: ['Espanha', 'Bélgica'],        // vencedor 91 x vencedor 92
+  99: ['Noruega', 'Inglaterra'],     // vencedor 93 x vencedor 94
+  100: ['Argentina', 'Suíça'],       // vencedor 95 x vencedor 96
 };
 (function applyKOFixtures() {
   const lookup = {};
@@ -1063,6 +1069,11 @@ const MANUAL_PREDICTIONS = {
     94: [1,2,'B'], // México x Inglaterra — Inglaterra supera o fator Azteca
     95: [2,0,'A'], // Argentina x Egito — Argentina controla o Salah
     96: [1,2,'B'], // Suíça x Colômbia — Colômbia mais ofensiva
+    // QUARTAS — gerados 08/07 antes dos jogos. Voz "humana": placares variados, um palpite de barriga (Noruega), evita o padrão-robô.
+    97: [1,0,'A'], // França x Marrocos — jogo truncado, França defende bem e mata no detalhe
+    98: [2,1,'A'], // Espanha x Bélgica — Espanha impõe o jogo
+    99: [2,1,'A'], // Noruega x Inglaterra — palpite de barriga: Haaland em brasa depois de tirar o Brasil
+    100: [3,1,'A'], // Argentina x Suíça — Argentina abre e administra
   },
   // CHATGPT — Classic LLM pattern: heavily favors ranked teams, few draws, no upsets
   // Will trigger detection: low draws %, conservative with favorites, repeated 2x0
@@ -1093,6 +1104,11 @@ const MANUAL_PREDICTIONS = {
     94: [0,2,'B'], // Inglaterra
     95: [3,0,'A'], // Argentina
     96: [0,2,'B'], // Colômbia
+    // QUARTAS — gerados 08/07. Chapa branca: favorito sempre, margem repetida, zero risco, zero empate.
+    97: [2,0,'A'], // França
+    98: [2,0,'A'], // Espanha
+    99: [0,2,'B'], // Inglaterra
+    100: [2,0,'A'], // Argentina
   },
   // GROK — Edgy LLM: more upsets, but still LLM patterns (uniform distribution, weird scores)
   'Grok': {
@@ -1122,6 +1138,11 @@ const MANUAL_PREDICTIONS = {
     94: [3,2,'A'], // México surpreende
     95: [2,3,'B'], // Salah tira a Argentina (zebra)
     96: [3,3,'B'], // empate, Colômbia nos pênaltis
+    // QUARTAS — gerados 08/07. Maluco total: zebras, placares absurdos, jogos de basquete.
+    97: [2,3,'B'], // Marrocos vira em cima da França no fim (zebra)
+    98: [3,4,'B'], // jogão de 7 gols, Bélgica ganha no apagar (zebra)
+    99: [4,2,'A'], // Haaland hat-trick, Noruega atropela
+    100: [1,3,'B'], // Suíça humilha a campeã Argentina (zebra máxima)
   },
   // MARTIN MAIA MELLO — palpites enviados em 05/06/2026
   'Martin M.': {
@@ -1145,6 +1166,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [1,3,'B'], 90: [1,2,'B'], 91: [2,2,'A'], 92: [1,2,'B'], 93: [2,1,'A'], 94: [2,3,'B'], 95: [2,1,'A'], 96: [0,2,'B'],
+    // QUARTAS — recebido 08/07.
+    97: [2,1,'A'], 98: [3,3,'B'], 99: [1,2,'B'], 100: [3,1,'A'],
   },
   // TITO MAIA — palpites enviados em planilha
   'Tito M': {
@@ -1168,6 +1191,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [1,2,'B'], 90: [1,1,'B'], 91: [2,1,'A'], 92: [1,2,'B'], 93: [1,1,'A'], 94: [1,2,'B'], 95: [3,2,'A'], 96: [1,2,'B'],
+    // QUARTAS — recebido 08/07.
+    97: [2,1,'A'], 98: [2,2,'A'], 99: [2,1,'A'], 100: [3,1,'A'],
   },
   // NILTON ROSSI — palpites enviados em planilha
   'nilton': {
@@ -1191,6 +1216,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [1,2,'B'], 90: [1,1,'B'], 91: [3,2,'A'], 92: [2,2,'A'], 93: [2,0,'A'], 94: [3,2,'A'], 95: [2,0,'A'], 96: [0,2,'B'],
+    // QUARTAS — recebido 08/07. Jogo 99: placar manda (escreveu "passa Noruega" mas 1x2 = Inglaterra; regra do admin).
+    97: [1,2,'B'], 98: [1,2,'B'], 99: [1,2,'B'], 100: [1,2,'B'],
   },
   // IARA TEIXEIRA WISNIK — palpites enviados em planilha
   'Iara e Violeta': {
@@ -1214,6 +1241,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [1,3,'B'], 90: [1,1,'B'], 91: [2,3,'B'], 92: [2,2,'A'], 93: [2,1,'A'], 94: [2,2,'A'], 95: [3,2,'A'], 96: [1,1,'B'],
+    // QUARTAS — recebido 08/07.
+    97: [2,1,'A'], 98: [2,1,'A'], 99: [2,2,'B'], 100: [3,1,'A'],
   },
   // Eidão — palpites enviados
   "Eidão": {
@@ -1231,6 +1260,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) PARCIAL — recebido 04/07, só jogo 90; resto pendente.
     90: [0,2,'B'],
+    // QUARTAS — recebido 08/07 (planilha sem nome, identificada como Eidão pelo admin). Completa.
+    97: [3,1,'A'], 98: [2,2,'B'], 99: [3,2,'A'], 100: [2,1,'A'],
   },
   // Zerba — palpites enviados
   "Zerba": {
@@ -1248,6 +1279,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [1,2,'B'], 90: [1,2,'B'], 91: [2,1,'A'], 92: [2,1,'A'], 93: [2,0,'A'], 94: [2,1,'A'], 95: [1,2,'B'], 96: [2,1,'A'],
+    // QUARTAS — recebido 08/07. (quem-passa em branco; inferido pelo placar, todos decididos)
+    97: [3,1,'A'], 98: [2,1,'A'], 99: [2,1,'A'], 100: [0,1,'B'],
   },
   // Guto — palpites enviados
   "Guto": {
@@ -1265,6 +1298,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [0,2,'B'], 90: [1,2,'B'], 91: [1,1,'A'], 92: [2,1,'A'], 93: [1,2,'B'], 94: [2,1,'A'], 95: [1,1,'A'], 96: [2,2,'B'],
+    // QUARTAS — recebido 09/07.
+    97: [2,1,'A'], 98: [2,0,'A'], 99: [2,2,'A'], 100: [2,1,'A'],
   },
   // Quim — palpites enviados
   "Quim": {
@@ -1282,6 +1317,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [1,3,'B'], 90: [0,2,'B'], 91: [1,2,'B'], 92: [2,1,'A'], 93: [3,2,'A'], 94: [1,1,'A'], 95: [3,0,'A'], 96: [2,1,'A'],
+    // QUARTAS — recebido 09/07.
+    97: [3,2,'A'], 98: [2,1,'A'], 99: [2,2,'B'], 100: [1,1,'A'],
   },
   // Cisco — palpites enviados
   "Cisco": {
@@ -1300,6 +1337,8 @@ const MANUAL_PREDICTIONS = {
     // OITAVAS (R16) recebido 04/07; completado com 91-96 em 05/07 (admin: subir tudo).
     89: [1,3,'B'], 90: [0,2,'B'],
     91: [1,1,'A'], 92: [2,0,'A'], 93: [2,0,'A'], 94: [1,2,'B'], 95: [1,2,'B'], 96: [0,1,'B'],
+    // QUARTAS — recebido 09/07.
+    97: [3,1,'A'], 98: [1,0,'A'], 99: [2,1,'A'], 100: [0,1,'B'],
   },
   // pablo — palpites enviados
   "pablo": {
@@ -1317,6 +1356,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [0,3,'B'], 90: [1,2,'B'], 91: [0,1,'B'], 92: [2,2,'B'], 93: [1,2,'B'], 94: [1,2,'B'], 95: [2,0,'A'], 96: [1,2,'B'],
+    // QUARTAS — recebido 08/07. (quem-passa em branco nos jogos decididos; inferido pelo placar)
+    97: [3,1,'A'], 98: [1,0,'A'], 99: [1,1,'A'], 100: [1,2,'B'],
   },
   // wisnikão do grau — palpites enviados
   "wisnikão do grau": {
@@ -1334,6 +1375,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [0,3,'B'], 90: [1,2,'B'], 91: [1,1,'A'], 92: [2,1,'A'], 93: [2,1,'A'], 94: [2,2,'B'], 95: [3,1,'A'], 96: [1,2,'B'],
+    // QUARTAS — recebido 08/07.
+    97: [1,0,'A'], 98: [2,0,'A'], 99: [1,1,'B'], 100: [3,1,'A'],
   },
   // Felipão — palpites enviados
   "Felipão": {
@@ -1351,6 +1394,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [0,3,'B'], 90: [1,2,'B'], 91: [1,2,'B'], 92: [1,0,'A'], 93: [1,0,'A'], 94: [1,2,'B'], 95: [2,0,'A'], 96: [0,1,'B'],
+    // QUARTAS — recebido 08/07.
+    97: [2,0,'A'], 98: [2,0,'A'], 99: [1,2,'B'], 100: [1,0,'A'],
   },
   // Renata Megale — palpites enviados
   "Renata Megale": {
@@ -1368,6 +1413,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [1,2,'B'], 90: [1,3,'B'], 91: [1,1,'A'], 92: [1,3,'B'], 93: [3,1,'A'], 94: [2,1,'A'], 95: [3,0,'A'], 96: [1,2,'B'],
+    // QUARTAS — recebido 09/07 (arquivo veio com NOME "Pedro Teixeira"; admin confirmou ser Renata Megale). Jogos 98/100: placar manda (quem-passa contraditório descartado, regra do admin).
+    97: [2,1,'A'], 98: [0,2,'B'], 99: [1,0,'A'], 100: [1,2,'B'],
   },
   // Arthur — palpites enviados
   "Arthur": {
@@ -1385,6 +1432,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [0,3,'B'], 90: [0,1,'B'], 91: [0,1,'B'], 92: [1,1,'A'], 93: [2,1,'A'], 94: [1,0,'A'], 95: [1,1,'A'], 96: [0,2,'B'],
+    // QUARTAS — recebido 08/07.
+    97: [1,1,'B'], 98: [2,0,'A'], 99: [1,0,'A'], 100: [2,0,'A'],
   },
   // JORGE TIMERMAN CAMARGO (JTC) — palpites enviados em 09/06/2026
   "JTC": {
@@ -1408,6 +1457,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07 (arquivo 'Jorge' = JTC).
     89: [0,2,'B'], 90: [0,2,'B'], 91: [3,2,'A'], 92: [2,1,'A'], 93: [2,0,'A'], 94: [2,1,'A'], 95: [2,1,'A'], 96: [0,2,'B'],
+    // QUARTAS — recebido 09/07 (arquivo sem nome, admin identificou como JTC).
+    97: [2,0,'A'], 98: [0,1,'B'], 99: [1,2,'B'], 100: [3,1,'A'],
   },
   // PATRICIA CHAGAS (Pati C.) — palpites enviados em 09/06/2026
   "Pati C.": {
@@ -1431,6 +1482,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [0,2,'B'], 90: [1,2,'B'], 91: [1,2,'B'], 92: [1,1,'A'], 93: [2,1,'A'], 94: [1,1,'A'], 95: [2,0,'A'], 96: [1,2,'B'],
+    // QUARTAS — recebido 09/07 (print, NOME "Pati Chagas").
+    97: [2,1,'A'], 98: [2,1,'A'], 99: [2,2,'B'], 100: [2,0,'A'],
   },
   // DANILO DE CERQUEIRA CESAR (Danilo Zica) — palpites enviados em 11/06/2026
   "Danilo Zica": {
@@ -1454,6 +1507,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — 04/07: copiado do Pedro T a pedido do admin JOGO 90 CANCELADO (envio pós-apito, mesma regra do Pedro T).
     89: [1,4,'B'], 91: [1,2,'B'], 92: [1,0,'A'], 93: [3,1,'A'], 94: [1,0,'A'], 95: [2,0,'A'], 96: [2,2,'B'],
+    // QUARTAS — 08/07: copiado do Pedro T a pedido do admin (iguais).
+    97: [3,1,'A'], 98: [2,0,'A'], 99: [2,1,'A'], 100: [3,1,'A'],
   },
   // PEDRO TEIXEIRA DE CERQUEIRA CÉSAR (Pedro T) — palpites enviados em 10/06/2026
   "Pedro T": {
@@ -1477,6 +1532,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07 (Pedro Teixeira). JOGO 90 CANCELADO (enviado após o apito).
     89: [1,4,'B'], 91: [1,2,'B'], 92: [1,0,'A'], 93: [3,1,'A'], 94: [1,0,'A'], 95: [2,0,'A'], 96: [2,2,'B'],
+    // QUARTAS — recebido 08/07.
+    97: [3,1,'A'], 98: [2,0,'A'], 99: [2,1,'A'], 100: [3,1,'A'],
   },
   // NATALIA JOELSAS TIMERMAN (Nati) — palpites enviados em 10/06/2026
   "Nati": {
@@ -1500,6 +1557,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07 (screenshot; todos placares decisivos).
     89: [1,3,'B'], 90: [1,2,'B'], 91: [1,2,'B'], 92: [2,1,'A'], 93: [2,1,'A'], 94: [1,2,'B'], 95: [3,1,'A'], 96: [0,2,'B'],
+    // QUARTAS — recebido 09/07 (print sem nome, admin identificou como Nati).
+    97: [2,2,'A'], 98: [1,1,'B'], 99: [1,2,'B'], 100: [2,0,'A'],
   },
   // ALICE CAROLO (Ali) — palpites enviados via Numbers
   "Ali": {
@@ -1523,6 +1582,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07 (Alice Carolo = Ali).
     89: [1,3,'B'], 90: [1,1,'B'], 91: [2,2,'B'], 92: [1,1,'A'], 93: [2,2,'A'], 94: [1,1,'B'], 95: [2,1,'A'], 96: [1,2,'B'],
+    // QUARTAS — recebido 09/07 (print).
+    97: [3,2,'A'], 98: [1,1,'A'], 99: [2,2,'A'], 100: [3,0,'A'],
   },
   // JOÃO GUILHERME DAL FABBRO (Jojota) — palpites enviados em 10/06/2026
   "Jojota": {
@@ -1546,6 +1607,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [1,2,'B'], 90: [0,1,'B'], 91: [1,1,'B'], 92: [1,0,'A'], 93: [2,1,'A'], 94: [1,1,'B'], 95: [2,1,'A'], 96: [0,1,'B'],
+    // QUARTAS — recebido 08/07. (participante mandou 97 e 98 com times invertidos; reorientado pro A/B do bolão)
+    97: [0,1,'B'], 98: [2,1,'A'], 99: [0,1,'B'], 100: [1,1,'A'],
   },
   // SAMUEL PESSOA VALENTE (Samuca) — palpites enviados em 10/06/2026
   "Samuca": {
@@ -1569,6 +1632,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [1,3,'B'], 90: [1,2,'B'], 91: [2,3,'B'], 92: [2,1,'A'], 93: [2,1,'A'], 94: [2,1,'A'], 95: [2,1,'A'], 96: [0,1,'B'],
+    // QUARTAS — recebido 08/07. Placar manda (quem-passa contraditório nos jogos 98/100 descartado por decisão do admin).
+    97: [3,1,'A'], 98: [2,1,'A'], 99: [1,2,'B'], 100: [2,1,'A'],
   },
   // GABRIELA JOELSAS TIMERMAN (Gabi Curintia) — palpites enviados em 10/06/2026
   "Gabi Curintia": {
@@ -1592,6 +1657,8 @@ const MANUAL_PREDICTIONS = {
   
     // OITAVAS (R16) — recebido 04/07.
     89: [1,2,'B'], 90: [1,1,'B'], 91: [2,2,'A'], 92: [1,1,'A'], 93: [2,1,'A'], 94: [1,2,'B'], 95: [3,0,'A'], 96: [1,3,'B'],
+    // QUARTAS — recebido 09/07 (arquivo "copyGabi", campo NOME em branco). Jogo 97 veio SEM placar; não registrado.
+    98: [3,0,'A'], 99: [1,3,'B'], 100: [3,0,'A'],
   },
 };
 
