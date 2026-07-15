@@ -84,6 +84,9 @@ KO_FIXTURES = {
     98: ('Espanha', 'Bélgica'),
     99: ('Noruega', 'Inglaterra'),
     100: ('Argentina', 'Suíça'),
+    # --- SEMIS — adicionado 14/07, espelha o HTML ---
+    101: ('França', 'Espanha'),
+    102: ('Inglaterra', 'Argentina'),
 }
 
 # openfootball usa nomes em inglês. Aliases generosos cobrindo variantes comuns.
