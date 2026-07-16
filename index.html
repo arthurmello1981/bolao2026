@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Bolão Copa 2026 — build v132 — +Samuca nas semis 14/07 (101 França 4-2, 102 Inglaterra 3-2). 26/26 com semis, completo. -->
+<!-- Bolão Copa 2026 — build v133 — FINAL(104 Espanha x Argentina) e 3º LUGAR(103 França x Inglaterra) fixados. NOVO: pontuação dos bônus campeão(20)/vice(10)/3º(5)/4º(5)/artilheiro(10). Artilheiro = const ARTILHEIRO_OFICIAL (admin preenche; match por sobrenome). +Samuca semis (v132). -->
 <!-- build v131 — +nilton nas semis 14/07. 25/26 com semis; falta só Samuca. -->
 <!-- build v121 — semis de 9 participantes inseridas 13/07 (Iara, wisnikão, pablo, Guto, Cisco, Quim dos xlsx; Danilo, Pedro T, Arthur manual). 12/26 com semis; faltam 14. -->
 <!-- build v120 — palpites das SEMIS das 3 IAs inseridos 13/07 (Claude 101 Esp / 102 Arg · ChatGPT 101 Fra / 102 Arg · Grok 101 Esp / 102 Ing). -->
@@ -830,6 +830,12 @@ const PARTICIPANTS = ['Claude', 'ChatGPT', 'Grok', 'Martin M.', 'Tito M', 'nilto
 
 const MULT = {'Grupos': 1, 'R32': 2, 'R16': 2, 'Quartas': 3, 'Semis': 4, '3º Lugar': 3, 'Final': 5};
 
+// ADMIN: artilheiro oficial da Copa. Deixe '' até a FIFA definir; então preencha (ex: 'Mbappé (França)').
+// O match com os palpites é por SOBRENOME (última palavra do nome), ignorando o país entre parênteses.
+const ARTILHEIRO_OFICIAL = '';
+// Pontos dos bônus de fim de torneio (definidos pelo admin).
+const BONUS_PTS = { champion: 20, vice: 10, third: 5, fourth: 5, topScorer: 10 };
+
 const PARALELO = {
   'Claude': {champion:['Espanha','es'], vice:['Argentina','ar'], third:['Portugal','pt'], fourth:['Marrocos','ma'], topScorer:'Lautaro Martínez (Argentina)'},
   'ChatGPT': {champion:['Brasil','br'], vice:['França','fr'], third:['Espanha','es'], fourth:['Argentina','ar'], topScorer:'Mbappé (França)'},
@@ -937,7 +943,9 @@ const KO_FIXTURES = {
   // Quartas: França 2-0 Marrocos · Espanha 2-1 Bélgica · Inglaterra 2-1 Noruega (pror.) · Argentina 3-1 Suíça (pror.).
   101: ['França', 'Espanha'],        // vencedor 97 x vencedor 98
   102: ['Inglaterra', 'Argentina'],  // vencedor 99 x vencedor 100
-  // 3º LUGAR (103) e FINAL (104): preencher DEPOIS das semis, quando os times existirem.
+  // 3º LUGAR (103) e FINAL (104) — liberado 14/07 (semis: Espanha 2-0 França · Argentina 2-1 Inglaterra).
+  103: ['França', 'Inglaterra'],     // perdedor 101 x perdedor 102
+  104: ['Espanha', 'Argentina'],     // vencedor 101 x vencedor 102
 };
 (function applyKOFixtures() {
   const lookup = {};
@@ -1995,6 +2003,54 @@ function advanceBonus(pred, official, isKnockout) {
   return (pa && oa && pa === oa) ? 10 : 0;
 }
 
+// Normaliza nome (tira acento, minúsculo, remove país entre parênteses).
+function normName(s) {
+  return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\(.*?\)/g, '').trim();
+}
+// Match de artilheiro por SOBRENOME (última palavra do nome oficial).
+function scorerMatch(guess, official) {
+  if (!guess || !official) return false;
+  const o = normName(official), g = normName(guess);
+  if (!o || !g) return false;
+  const otok = o.split(/\s+/).filter(w => w.length > 2);
+  const surname = otok[otok.length - 1];
+  if (!surname) return false;
+  return new Set(g.split(/\s+/).filter(w => w.length > 2)).has(surname);
+}
+// Time vencedor/perdedor de um jogo de mata-mata, a partir do resultado oficial.
+function outcomeTeams(num) {
+  const m = MATCHES.find(x => x.num === num);
+  const off = OFFICIAL[num];
+  if (!m || !m.teamA || !m.teamB || !off) return null;
+  const adv = advancerOf(off);
+  if (!adv) return null;
+  return adv === 'A'
+    ? { winner: m.teamA[0], loser: m.teamB[0] }
+    : { winner: m.teamB[0], loser: m.teamA[0] };
+}
+// Bônus de fim de torneio: campeão/vice (da final, jogo 104), 3º/4º (do jogo 103) e artilheiro.
+// Só pontua o que já foi decidido (final/3º jogados). Retorna { total, detail }.
+function championBonus(participant) {
+  const par = PARALELO[participant];
+  if (!par) return { total: 0, detail: {} };
+  const fin = outcomeTeams(104);   // 1º = vencedor, 2º = perdedor
+  const terc = outcomeTeams(103);  // 3º = vencedor, 4º = perdedor
+  let total = 0; const detail = {};
+  const hit = (guess, actual) => guess && actual && guess[0] === actual;
+  if (fin) {
+    if (hit(par.champion, fin.winner)) { total += BONUS_PTS.champion; detail.champion = BONUS_PTS.champion; }
+    if (hit(par.vice, fin.loser))      { total += BONUS_PTS.vice;     detail.vice = BONUS_PTS.vice; }
+  }
+  if (terc) {
+    if (hit(par.third, terc.winner)) { total += BONUS_PTS.third;  detail.third = BONUS_PTS.third; }
+    if (hit(par.fourth, terc.loser)) { total += BONUS_PTS.fourth; detail.fourth = BONUS_PTS.fourth; }
+  }
+  if (ARTILHEIRO_OFICIAL && scorerMatch(par.topScorer, ARTILHEIRO_OFICIAL)) {
+    total += BONUS_PTS.topScorer; detail.topScorer = BONUS_PTS.topScorer;
+  }
+  return { total, detail };
+}
+
 function totalPoints(participant) {
   let total = 0;
   let byPhase = {};
@@ -2018,7 +2074,9 @@ function totalPoints(participant) {
       bonusTotal += bonus;
     }
   }
-  return { total, byPhase, exactCount, winnerCount, bonusTotal };
+  const cb = championBonus(participant);
+  if (cb.total) { total += cb.total; bonusTotal += cb.total; byPhase['Bônus'] = (byPhase['Bônus'] || 0) + cb.total; }
+  return { total, byPhase, exactCount, winnerCount, bonusTotal, championBonus: cb };
 }
 
 // ============================================================
