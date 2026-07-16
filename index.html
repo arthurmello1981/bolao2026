@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Bolão Copa 2026 — build v133 — FINAL(104 Espanha x Argentina) e 3º LUGAR(103 França x Inglaterra) fixados. NOVO: pontuação dos bônus campeão(20)/vice(10)/3º(5)/4º(5)/artilheiro(10). Artilheiro = const ARTILHEIRO_OFICIAL (admin preenche; match por sobrenome). +Samuca semis (v132). -->
+<!-- Bolão Copa 2026 — build v135 — ranking agora tem coluna BÔNUS (1/2/3/4/artilheiro) e a coluna Final virou Final/3º (engloba o jogo 103). Colunas fecham com o Total. Bolão Paralelo acende (v134). -->
 <!-- build v131 — +nilton nas semis 14/07. 25/26 com semis; falta só Samuca. -->
 <!-- build v121 — semis de 9 participantes inseridas 13/07 (Iara, wisnikão, pablo, Guto, Cisco, Quim dos xlsx; Danilo, Pedro T, Arthur manual). 12/26 com semis; faltam 14. -->
 <!-- build v120 — palpites das SEMIS das 3 IAs inseridos 13/07 (Claude 101 Esp / 102 Arg · ChatGPT 101 Fra / 102 Arg · Grok 101 Esp / 102 Ing). -->
@@ -2154,7 +2154,8 @@ function renderRanking() {
       <td class="phase-pts">${s.byPhase['R16'] || 0}</td>
       <td class="phase-pts">${s.byPhase['Quartas'] || 0}</td>
       <td class="phase-pts">${s.byPhase['Semis'] || 0}</td>
-      <td class="phase-pts">${s.byPhase['Final'] || 0}</td>
+      <td class="phase-pts">${(s.byPhase['Final'] || 0) + (s.byPhase['3º Lugar'] || 0)}</td>
+      <td class="phase-pts">${s.byPhase['Bônus'] || 0}</td>
       <td class="phase-pts">${s.exactCount}</td>
       <td class="total">${s.total}</td>
     </tr>`;
@@ -2177,7 +2178,8 @@ function renderRanking() {
             <th>R16</th>
             <th>QF</th>
             <th>SF</th>
-            <th>Final</th>
+            <th>Final/3º</th>
+            <th>Bônus</th>
             <th>Exatos</th>
             <th style="text-align: right;">Total</th>
           </tr>
@@ -2330,42 +2332,52 @@ function renderParticipantes() {
           </div>
           <div class="summary-item">
             <div class="label">Bônus de Avanço</div>
-            <div class="value">${data.bonusTotal}</div>
+            <div class="value">${data.bonusTotal - data.championBonus.total}</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Bônus Final (1/2/3/4/art.)</div>
+            <div class="value">${data.championBonus.total}</div>
           </div>
         </div>
       </div>
     </div>
   `;
 
+  const det = data.championBonus.detail;
+  const finDone = !!outcomeTeams(104), tercDone = !!outcomeTeams(103), artDone = !!ARTILHEIRO_OFICIAL;
+  const ptsTag = (hit, val, done) => hit
+    ? `<span style="color:var(--green);font-weight:800;">+${val} pts ✓</span>`
+    : (done ? `<span style="color:var(--text-muted);">0 pts</span>` : `vale ${val} pts`);
+  const paraleloTotal = data.championBonus.total;
   const paraleloHtml = `
     <div class="card">
-      <div class="card-header"><h2>Bolão Paralelo</h2><span style="font-size:11px;color:var(--text-muted);">a apurar no final da Copa</span></div>
+      <div class="card-header"><h2>Bolão Paralelo</h2><span style="font-size:11px;color:var(--text-muted);">${paraleloTotal ? paraleloTotal + ' pts somados ao total' : 'a apurar no final da Copa'}</span></div>
       <div class="card-body">
         <div class="paralelo-grid">
           <div class="paralelo-item">
             <div class="label">Campeão</div>
             <div class="value">${parVal(par.champion)}</div>
-            <div class="pts">vale 20 pts</div>
+            <div class="pts">${ptsTag(det.champion, 20, finDone)}</div>
           </div>
           <div class="paralelo-item">
             <div class="label">Vice-campeão</div>
             <div class="value">${parVal(par.vice)}</div>
-            <div class="pts">vale 10 pts</div>
+            <div class="pts">${ptsTag(det.vice, 10, finDone)}</div>
           </div>
           <div class="paralelo-item">
             <div class="label">3º Lugar</div>
             <div class="value">${parVal(par.third)}</div>
-            <div class="pts">vale 5 pts</div>
+            <div class="pts">${ptsTag(det.third, 5, tercDone)}</div>
           </div>
           <div class="paralelo-item">
             <div class="label">4º Lugar</div>
             <div class="value">${parVal(par.fourth)}</div>
-            <div class="pts">vale 5 pts</div>
+            <div class="pts">${ptsTag(det.fourth, 5, tercDone)}</div>
           </div>
           <div class="paralelo-item">
             <div class="label">Artilheiro</div>
             <div class="value">${parTop}</div>
-            <div class="pts">vale 10 pts</div>
+            <div class="pts">${ptsTag(det.topScorer, 10, artDone)}</div>
           </div>
         </div>
       </div>
