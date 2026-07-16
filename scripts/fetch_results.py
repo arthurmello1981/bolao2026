@@ -87,6 +87,9 @@ KO_FIXTURES = {
     # --- SEMIS — adicionado 14/07, espelha o HTML ---
     101: ('França', 'Espanha'),
     102: ('Inglaterra', 'Argentina'),
+    # --- 3º LUGAR e FINAL — adicionado 14/07, espelha o HTML ---
+    103: ('França', 'Inglaterra'),
+    104: ('Espanha', 'Argentina'),
 }
 
 # openfootball usa nomes em inglês. Aliases generosos cobrindo variantes comuns.
